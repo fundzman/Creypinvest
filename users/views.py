@@ -221,7 +221,7 @@ def deposit_done(request, plan):
                         html_msg = f'<a style="border: 1px solid #673ab7;padding: 5px 10px;border-radius: 24px;color: #fff;background: #673ab7;" href="{url}" class="btn btn-primary border">Check Transactions List</a>'
                         send_alert_mail(request=request, email_subject=f"${price} Deposit Requested", user_email="divuzki@gmail.com",
                                         email_message=f"User `{user.username}` deposited ${price} and its undergoing confirmation by the team. It will take 1-3 days before he/she get credited [{user.username} wallet address is `{wallet.btc_address}`]", email_image="user-payed.png", html_message=html_msg)
-                        send_alert_mail(request=request, email_subject=f"${price} Deposit Requested", user_email="info.creypinvest@gmail.com",
+                        send_alert_mail(request=request, email_subject=f"${price} Deposit Requested", user_email="creypinvest@gmail.com",
                                         email_message=f"User `{user.username}` deposited ${price} and he/she is waiting for payment confirmation. {user.username} wallet address is `{wallet.btc_address}` ", email_image="user-payed.png", html_message=html_msg)
                     except:
                         pass
