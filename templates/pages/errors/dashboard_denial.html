@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% load i18n %} {% block title %}{% trans "No Active Plan" %}{% endblock %} {% block content %}
+<div class="maill-success">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="container">
+        <div class="success-content">
+          <h1 style="text-transform: capitalize">Sorry {{user.username}}</h1>
+          <h4>You must have an active plan before you can access dashboard full features</h4>
+          <p>Deposit once to get an active plan</p>
+          <div class="button mr-2">
+              <button type="submit" onclick="window.location.href = `{% url 'deposit' %}`" style="background-color: rgb(132, 211, 67);" class="btn">
+                {% trans "Deposit" %}
+            </button>
+            <button type="submit" onclick="window.location.href = `{% url 'dashboard-profile' %}`" class="btn">{% trans "Profile" %}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

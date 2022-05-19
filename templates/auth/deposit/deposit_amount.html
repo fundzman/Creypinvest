@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% load static %}
+<title>{% block title %}Deposit Now{% endblock title %}</title>
+{% block css %}
+<style>
+    input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+</style>
+{% endblock css %}
+{% block content %}
+<div class="maill-success">
+    <div class="d-table">
+    <div class="d-table-cell">
+    <div class="container">
+    <div class="success-content">
+        {% if large %}
+        <h1>Enter Deposit Amount Above $25,000</h1>
+        <form action="{% url 'deposit_amount_auth' pack %}" method="post" class="input-head">
+            {% csrf_token %}
+            <div class="form-group d-flex p-2 rounded-pill border m-auto" style="width: 150px;">
+                <label for="dollars">$</label>
+              <input
+                class="px-2 border-none w-100"
+                style="border: none;"
+                value="25000"
+                min="25000"
+                name="price"
+                type="number"
+                id="price"
+                placeholder="Enter Amount"
+                required
+              />
+            </div>
+            <div class="button">
+                <button type="submit" class="btn mt-2" name="action">Proceed</button>
+            </div>
+        </form>
+        {% else %}
+        <h1>Select Deposit Amount</h1>
+        <form action="{% url 'deposit_amount_auth' pack %}" method="post">
+        {% csrf_token %}
+        <select name="price" id="price" class="form-group p-2 border rounded-pill" style="width: 150px;">
+            {% for price in price_list %}
+            <option value="{{price}}">${{price}}</option>
+            {% endfor %}
+        </select>
+        <div class="button">
+            <button type="submit" class="btn mt-2" name="action">Proceed</button>
+        </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock content %}

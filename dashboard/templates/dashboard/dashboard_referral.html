@@ -1,0 +1,59 @@
+{% extends 'dashboard_base.html' %} 
+{% block css %} 
+{% include 'dashboard/dashboard_home_style.html' %} 
+{% endblock css %}
+{% block head_title %}{{title}}{% endblock head_title %}
+{% block content %}
+<!-- Column -->
+<div class="home-container">
+  <div class="row m-0">
+    <div class="col-md-7 col-12">
+      <div class="row">
+        <div class="col-12 px-0 mb-4">
+            <div class="box-right">
+              <div class="d-flex pb-2">
+                <p class="fw-bold h7">
+                <span class="textmuted" style="line-break: break;">{{request.get_host}}/r/</span>{{user.username}}
+                </p>
+                <p class="ms-auto p-blue">
+                  <span class="bg btn btn-primary fas fa-pencil-alt me-3 d-none"></span>
+                  <span class="bg btn btn-primary far fa-clone" 
+                  onclick="copyToClipboard('Start Investing in the future of Bitcoin with *CreypInvest*,' +
+                  'by using my referral link {{request.scheme}}:/\/\{{request.get_host}}/r/{{user.username}} you will get a welcoming $100 for free if you deposit above $1,000')"></span>
+                </p>
+              </div>
+              <div class="bg-blue p-2">
+                <p class="h8 textmuted">
+                  Get 10% of the person who deposit above $1,000 using your referral link
+                  to create a new account while your referee gets $100 as welcoming gift.
+                </p>
+                <p class="p-blue bg btn btn-primary h8" onclick="window.location.href = `{% url 'dashboard-referral' %}`">LEARN MORE</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-md-7 col-12">Transaction
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{user.profile.refer_clicks}} <span class="textmuted">Clicks</span></h4>
+                <div class="text-end">
+                    <h2 class="font-light mb-0"><i class="ti-arrow-up text-success"></i> $0</h2>
+                    <span class="text-muted">Todays Income</span>
+                </div>
+                <span class="text-success">0%</span>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar"
+                        style="width: 0%; height: 6px;" aria-valuenow="25" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+  </div>
+</div>
+  <!-- Column -->
+  {% endblock content %}

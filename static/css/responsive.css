@@ -1,0 +1,107 @@
+@media (max-width: 1300px) {
+}
+
+@media (max-width: 1120px) {
+}
+
+@media (max-width: 992px) {
+  .hero_area {
+    height: auto !important;
+  }
+
+  .quote_btn-container {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .custom_nav-container .navbar-nav {
+    padding-top: 15px;
+  }
+
+  .custom_nav-container .navbar-nav .nav-item .nav-link {
+    padding: 5px 25px;
+    margin: 5px 0;
+  }
+
+  .slider_section {
+    padding: 45px 0 145px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .project_section .box .detail-box {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .invt_section .img-box {
+    margin-top: 45px;
+  }
+
+  .contact_section .form_container {
+    padding: 45px 25px;
+  }
+
+  .info_section .info_contact .link-box {
+    justify-content: center;
+  }
+  .errorlist {
+    border-radius: 0.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .client_section .carousel-control-prev {
+    left: 0;
+  }
+
+  .client_section .carousel-control-next {
+    right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider_section .detail-box h1 {
+    font-size: 2rem;
+  }
+
+  .subscribe_section form {
+    flex-direction: column;
+  }
+
+  .subscribe_section form button {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  .client_section .box {
+    flex-direction: column;
+  }
+
+  .client_section .box .img-box {
+    margin: 0;
+    margin-left: 15px;
+    margin-bottom: -55px;
+  }
+
+  .client_section .box .detail-box {
+    background-color: #ffffff;
+    padding: 75px 15px 15px 15px;
+  }
+}
+
+@media (max-width: 425px) {}
+
+@media (max-width: 376px) {
+  .slider_section .box .num-box {
+    width: 55px;
+    height: 55px;
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}

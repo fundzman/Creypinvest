@@ -1,0 +1,31 @@
+{% extends 'site/admin-base.html' %} {% block content %}
+<div class="sides">
+  <h3>TRANSACTIONS</h3>
+  <div class="side">
+    <ol>
+      {% for object in objects %}
+      <li><a href="#">{{object}}</a>
+        <ul style="display: flex; list-style: none">
+          [<li>
+            <a
+              style="color: green; margin-right: 0.5rem"
+              href="{% url 'admin-transaction-accept' object.pk %}"
+              >Accept</a
+            >
+          </li>
+          /
+          <li>
+            <a
+              style="color: red; margin-left: 0.5rem"
+              href="{% url 'admin-transaction-delete' object.pk %}"
+              >Decline</a
+            >
+          </li>
+          ]
+        </ul>
+    </li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+{% endblock content %}

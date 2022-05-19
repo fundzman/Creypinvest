@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% load static %}
+<title>{% block title %}{% if type %}${% endif %}{{price}} Deposit{% if type == 'Deposited' %}ed{% else %}{% endif %}{% endblock title %}</title>
+{% block content %}
+<!-- deposit section -->
+{% if dp %}
+<section class="deposit_body section">
+  <div class="container-fluid">
+    <div class="row" style="justify-content: center">
+      <div class="p-5">
+        <div class="form_container w-full" style="background: none;padding: initial;display: flex;align-items: center;">
+            <div class="col-md-9 col-lg-10">
+              <div class="card" style="transform: none !important;">
+                <div class="card-body">
+                  <div class="plan-name"><h1>
+                    Deposit{% if type == 'Deposited' %}ed ${{price}} 
+                    </h1>
+                    (<span class="convert-value-btc" style="color: #326400;" data-btc-value="{{price}}">loading...</span>) 
+                    {% elif depositing == 'yes' %}ing ${{price}}
+                  </h1>
+                     (<span class="convert-value-btc" style="color: #326400;" data-btc-value="{{price}}">loading...</span>) 
+                     {% else %} Now
+                    {% endif %}
+                  </div>
+                  <div class="plan-description dp_container specs">
+                    {% if type %}
+                    {% if depositing == 'yes' %} Copy Your Deposit Bitcoin Address:
+                      <a
+                        href="#copy-btc-address"
+                        onclick="copyToClipboard(`bc1q48lwj0kv0zk4u8w2x54zxwr927jx9wcnvwakft`);"
+                        class="quote_btn copy_btn"
+                        style="text-transform: none"
+                      >
+                        bc1q48lwj0kv0zk4u8w2x54zxwr927jx9wcnvwakft <button class="mt-2" id="copyed_btn">copy</button></a
+                      >
+                    {% endif %}
+                      {% endif %}
+                  </div>
+                  <div class="plan-cta">
+                    <p>
+                      
+              <!-- HASH PROOF -->
+              <form action="/auth/deposit/{{price}}/" class="hash-form" method="POST">
+                {% csrf_token %}
+                {% if type == 'Deposited' %}
+                <div>
+                  <input
+                    type="text"
+                    name="hash"
+                    placeholder="Enter Your Bitcoin TX HASH ID"
+                    required
+                  />
+                  <div class="requirements">Enter Your Bitcoin To Confirm Payment Transactions.</div>
+                </div>
+                {% endif %}
+                {% if type %}
+                <div class="btn_box mt-3">
+                  <button type="submit" style="background-color: rgb(128, 255, 0)">
+                    {% if type == 'Deposited' %} Confirm {% elif type == 'Depositing' %} Sent It {% endif %}
+                  </button>
+                </div>
+                {% endif %}
+              </form>
+              <!-- END HASH PROOF -->
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% else %}
+{% include 'pages/pricing.html' %}
+{% endif %}
+{% endblock content %}

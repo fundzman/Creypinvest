@@ -1,0 +1,88 @@
+{% extends 'base.html' %} 
+{% load i18n %} 
+{% load static %}
+{% load socialaccount %} 
+{% block title %}{% trans "Google SignUp" %}{% endblock %} 
+{% block content %}
+<div
+  class="breadcrumbs"
+  style="background-image: url({% static 'images/bread-bg/banner-bg.svg' %})"
+>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 offset-lg-3 col-md-12 col-12">
+        <div class="breadcrumbs-content">
+          <h1 class="page-title">{% trans "Signing Up With Your Google Account" %}</h1>
+          <ul class="breadcrumb-nav">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'account_signup' %}">{% trans "SignUp" %}</a></li>
+            <li>{% trans "Google Account" %}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="account-login section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
+        <form
+          class="card login-form inner-content"
+          action="{% url 'socialaccount_signup' %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="title">
+              <h3>{% trans 'Google Sign Up' %}</h3>
+              <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+                {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
+            </div>
+            <div class="form-errors">
+              {% for field in form %}
+              <div class="form-error">
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+            <div class="input-head">
+              <div class="row">
+                <div class="">
+                  <div class="form-group input-group">
+                    <label><i class="lni lni-envelope"></i></label>
+                    <input
+                      class="form-control"
+                      name="email"
+                      type="email"
+                      placeholder="Your email"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="">
+                  <div class="form-group input-group">
+                    <label><i class="lni lni-user"></i></label>
+                    <input
+                      class="form-control"
+                      name="username"
+                      type="text"
+                      placeholder="Your username"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="button">
+              <button class="btn" type="submit">{% trans 'Create Account' %}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

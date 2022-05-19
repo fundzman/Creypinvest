@@ -1,0 +1,12 @@
+{% extends 'site/admin-base.html' %}
+{% block content %}
+<div class="sides">
+    <h3>TRANSACTIONS</h3>
+    <div class="side">
+        <ul>
+            <li><a href="{% url 'admin-transaction-deposit' %}">Deposit</a></li>
+            <li><a href="#">Withdrawal</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock content %}

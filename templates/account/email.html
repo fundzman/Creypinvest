@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% load i18n %}
+
+
+{% block title %}{% trans "E-mail Addresses" %}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  .maill-success {
+  overflow: auto !important;
+}
+.add-btn{
+  width: 120px;
+  border-radius: 24px;
+  color: #fff;
+  padding: 5px;
+  background: #24126A;
+  transition: all .2s;
+}
+.add-btn:hover{
+  border: 1px solid #0000003d;
+  color: #000;
+  background: transparent;
+}
+.buttonHolder button{
+  margin-right: .5rem;
+}
+.button-holder:hover{
+  border: 0.1px solid #000a;
+  background: #b0c7ce;
+  color: #24126A;
+}
+.add_email{
+  flex-direction:column;
+}
+</style>
+{% endblock css %}
+{% block content %}
+<div class="maill-success section">
+  <div class="d-table section">
+  <div class="d-table-cell">
+  <div class="container">
+  <div class="success-content">
+    <h1>{% trans "E-mail Addresses" %}</h1>
+{% if user.emailaddress_set.all %}
+<p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+
+<form action="{% url 'account_email' %}" class="email_list" method="post">
+{% csrf_token %}
+<fieldset class="blockLabels form-group">
+
+  {% for emailaddress in user.emailaddress_set.all %}
+<div class="ctrlHolder">
+      <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+
+      <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+{{ emailaddress.email }}
+    {% if emailaddress.verified %}
+    <span class="verified">{% trans "Verified" %}</span>
+    {% else %}
+    <span class="unverified">{% trans "Unverified" %}</span>
+    {% endif %}
+      {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
+</label>
+</div>
+  {% endfor %}
+
+<div class="buttonHolder d-flex mb-3 ml-4 justify-content-center">
+      <button class="secondaryAction button-holder border rounded-pill mr-2 px-2" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="secondaryAction button-holder border rounded-pill mr-2 px-2" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="primaryAction button-holder border rounded-pill mr-2 px-2 btn-danger" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+</div>
+
+</fieldset>
+</form>
+
+{% else %}
+<p><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
+
+{% endif %}
+
+  {% if can_add_email %}
+    <h2>{% trans "Add E-mail Address" %}</h2>
+
+    <form method="post" action="{% url 'account_email' %}" class="d-flex add_email">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button name="action_add" class="add-btn" type="submit">{% trans "Add E-mail" %}</button>
+    </form>
+  {% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block extra_body %}
+<script type="text/javascript">
+(function() {
+  var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("click", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

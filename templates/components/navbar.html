@@ -1,0 +1,74 @@
+{% load static %}
+<header class="header navbar-area sticky">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <div class="nav-inner">
+          <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/">
+              <img src="{% static 'images/logo/logo.svg' %}" alt="Logo" />
+            </a>
+            <button
+              class="navbar-toggler mobile-menu-btn"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse sub-menu-bar"
+              id="navbarSupportedContent"
+            >
+              <ul id="nav" class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a href="{% url 'home' %}" class="activex" aria-label="Toggle navigation"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'about-us' %}" aria-label="Toggle navigation">About</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'contact-us' %}" aria-label="Toggle navigation">Contact Us</a>
+                </li>
+                {% if not user.profile.deposit_before == True %}
+                <li class="nav-item">
+                    <a href="{% url 'deposit' %}"  aria-label="Toggle navigation"> Invest </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a href="{% url 'deposit' %}?u={{user.username}}&deposited=true&route={{user.profile.ip_address}}"  aria-label="Toggle navigation"> Deposit </a>
+              </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a href="{% url 'dashboard-home' %}"  aria-label="Toggle navigation"> Dashboard </a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a href="{% url 'account_login' %}"  aria-label="Toggle navigation"> Signin </a>
+            </li>
+                {% endif %}
+              </ul>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="button">
+              <a href="{% url 'dashboard-profile' %}" class="btn">Profile</a>
+            </div>
+            {% else %}
+            <div class="button">
+              <a href="/auth/account/signup" class="btn">Get started</a>
+            </div>
+            {% endif %}
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

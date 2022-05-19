@@ -1,0 +1,110 @@
+
+{% extends 'base.html' %}
+{% load i18n %} 
+{% load static %} {% load socialaccount %} {% block title %}{% trans "Sign In" %}{% endblock %} {% block content %}
+<div
+  class="breadcrumbs"
+  style="background-image: url({% static 'images/bread-bg/banner-bg.svg' %})"
+>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 offset-lg-3 col-md-12 col-12">
+        <div class="breadcrumbs-content">
+          <h1 class="page-title">{% trans "Welcome Back!" %}</h1>
+          <ul class="breadcrumb-nav">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>{% trans "Sign In" %}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="account-login section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
+        <form
+          class="card login-form inner-content"
+          action="{% url 'account_login' %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="title">
+              <h3>{% trans 'Sign In Now' %}</h3>
+              <p>{% trans 'Sign in by entering the information below.' %}</p>
+            </div>
+            <div class="form-errors px-3">
+              <div class="form-error">
+                {% if form.errors %}
+                <p style="color: red">Wrong Username Or Password</p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="input-head">
+              <div class="form-group input-group">
+                <label><i class="lni lni-user"></i></label>
+                <input
+                  class="form-control"
+                  name="login"
+                  type="text"
+                  maxlength="150"
+                  autocomplete="username"
+                  id="reg-username id_login"
+                  placeholder="Enter your username"
+                  required
+                />
+              </div>
+              <div class="form-group input-group">
+                <label><i class="lni lni-lock-alt"></i></label>
+                <input
+                  class="form-control"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  id="reg-pass id_password"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+            </div>
+            <div
+              class="d-flex flex-wrap justify-content-between bottom-content"
+            >
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  class="form-check-input width-auto"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label">{% trans 'Remember me' %}</label>
+              </div>
+              <a class="lost-pass" href="{% url 'account_reset_password' %}"
+                >Forgot password?</a
+              >
+            </div>
+            <div class="button">
+              <button class="btn" type="submit">{% trans 'Sign In' %}</button>
+            </div>
+            <div class="or"><span>{% trans 'Or' %}</span></div>
+            <div class="alt-option">
+              <span class="small-title">{% trans 'Sign in with your work email' %}</span>
+              <a href="{% provider_login_url 'google' %}" class="option-button"
+                ><img
+                  src="{% static 'images/account-login/google.png' %}"
+                  alt="google-logo"
+                />{% trans 'Sign In With Google' %}
+              </a>
+            </div>
+            <h4 class="create-account">
+                {% trans 'Don`t have an account?' %} <a href="{{ signup_url }}">{% trans 'Sign Up Here' %}</a>
+            </h4>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

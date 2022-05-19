@@ -1,0 +1,441 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,400|Roboto);
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffcc66;
+  color: #444751;
+}
+
+.my-wallet {
+  transform: translate3d(-50%, -50%, 0);
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px #ffa61b;
+  font-family: "Open Sans", sans-serif;
+  height: 700px;
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  width: 880px;
+}
+
+.my-wallet-sidebar {
+  background-color: #f2f2f2;
+  color: #707584;
+  float: left;
+  height: 100%;
+  padding: 50px;
+  width: 360px;
+}
+
+.my-wallet-title {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 0 0 50px 0;
+}
+
+.my-wallet-title .add-account {
+  transition: color 200ms;
+  color: #b2b2b2;
+  float: right;
+  font-size: 48px;
+  line-height: 20px;
+  position: relative;
+}
+
+.my-wallet-title .add-account:hover {
+  color: #707584;
+  cursor: pointer;
+}
+
+.loading {
+  -webkit-animation: load 500ms ease forwards;
+  animation: load 500ms ease forwards;
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/83141/ripple.svg") center no-repeat;
+  z-index: 999;
+}
+
+.accounts-container {
+  bottom: 50px;
+  left: 50px;
+  height: 330px;
+  position: absolute;
+}
+
+.active-account {
+  border: 4px solid #8393ca;
+  border-radius: 4px;
+  height: 150px;
+  position: relative;
+  width: 250px;
+  z-index: 1;
+}
+
+.account, .add-account-modal .account, .my-wallet-sidebar .account {
+  background-color: #fff;
+  border: 2px solid #e1e1e1;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  height: 150px;
+  margin-bottom: 30px;
+  padding: 15px;
+  width: 250px;
+}
+
+.account-card-type {
+  height: 44px;
+  margin-bottom: 20px;
+  width: 64px;
+}
+
+.account-card-type.is-visa {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/83141/visa-card.svg") center no-repeat;
+}
+
+.account-card-type.is-amex {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/83141/amex-card.svg") center no-repeat;
+}
+
+.account-card-type.is-mastercard {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/83141/mastercard.svg") center no-repeat;
+}
+
+.account-number {
+  letter-spacing: 0.09em;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  outline: none;
+}
+
+.account-expiration {
+  border: none;
+  bottom: 15px;
+  color: #b2b2b2;
+  font-size: 16px;
+  left: 15px;
+  outline: none;
+  position: absolute;
+}
+
+.my-wallet-sidebar .account {
+  transition: top 500ms ease, transform 200ms ease;
+  position: absolute;
+  top: 0;
+  will-change: transform, top;
+}
+
+.my-wallet-sidebar .account.is-selected {
+  top: -186px !important;
+}
+
+.my-wallet-sidebar .account:hover:not(.is-selected) {
+  transform: translateY(-30px);
+  cursor: pointer;
+}
+
+.my-wallet-sidebar .account:hover:not(.is-selected).is-stationary {
+  transform: translateY(0);
+}
+
+.account-details-container {
+  font-family: "Open Sans", sans-serif;
+  height: 100%;
+  overflow: hidden;
+  padding: 50px;
+  position: relative;
+}
+
+.account-details {
+  transition: transform 500ms ease, opacity 200ms ease;
+  transform: translateX(110%);
+  opacity: 0;
+  position: absolute;
+  top: 50px;
+  width: 420px;
+}
+
+.account-details.is-selected {
+  transition: transform 500ms ease, opacity 200ms 200ms ease;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.transaction-history-placeholder {
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 200ms ease;
+  color: #b2b2b2;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: normal;
+  left: 50%;
+  opacity: 1;
+  position: absolute;
+  top: 50%;
+}
+
+.transaction-history-placeholder.is-hidden {
+  opacity: 0;
+}
+
+.value-unit {
+  color: #444751;
+  font-size: 36px;
+  font-weight: bold;
+  position: relative;
+}
+
+.value-subunit {
+  font-size: 0.6em;
+  left: -0.5em;
+  position: relative;
+  top: 0.1em;
+}
+
+.account-balance {
+  letter-spacing: 0.025em;
+  border-bottom: 1px solid #b2b2b2;
+  color: #707584;
+  font-size: 24px;
+  padding-bottom: 60px;
+}
+
+.account-balance .value-unit {
+  float: right;
+  right: -0.25em;
+  top: -0.2em;
+}
+
+.transaction-history {
+  height: 510px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 30px;
+  width: 450px;
+}
+
+.transaction {
+  display: table;
+  padding: 50px 0 0 38px;
+  position: relative;
+  width: 100%;
+}
+
+.transaction-details {
+  display: table-cell;
+  width: 80%;
+}
+
+.transaction-amount {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
+}
+
+.transaction-amount .value-unit {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.transaction-merchant {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.transaction-date {
+  color: #b2b2b2;
+  font-size: 14px;
+}
+
+.transaction:before {
+  border-radius: 100%;
+  border: 2px solid #e1e1e1;
+  content: " ";
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  left: 0;
+  line-height: 16px;
+  height: 20px;
+  position: absolute;
+  text-align: center;
+  top: 65px;
+  width: 20px;
+}
+
+.transaction[data-transaction-type=debit]:before {
+  content: "–";
+  line-height: 14px;
+}
+
+.transaction[data-transaction-type=debit] .value-unit {
+  color: #8393ca;
+}
+
+.transaction[data-transaction-type=credit]:before {
+  content: "+";
+}
+
+.transaction[data-transaction-type=credit] .value-unit {
+  color: #66cc33;
+}
+
+.add-account-modal {
+  visibility: hidden;
+}
+
+.add-account-modal .overlay {
+  transition: opacity 200ms ease;
+  background: #ffcc66;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 9000;
+}
+
+.add-account-modal .account {
+  transform: translate3d(-50%, -30%, 0);
+  transition: all 300ms ease;
+  border-color: #ffa61b;
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  will-change: transform, opacity;
+  z-index: 9001;
+}
+
+.add-account-modal .account-card-type {
+  border-radius: 5px;
+  float: left;
+  margin-left: 12px;
+}
+
+.add-account-modal .account-card-type.is-visa {
+  margin-left: 0;
+}
+
+.add-account-modal .account-card-type:hover {
+  border: 3px solid #ffcc66;
+  cursor: pointer;
+}
+
+.add-account-modal .account-card-type.is-selected {
+  border: 3px solid #ffcc66;
+}
+
+.add-account-modal .account-number {
+  letter-spacing: 0.03em;
+}
+
+.add-account-modal .account-expiration {
+  color: #444751;
+}
+
+.add-account-modal .account.has-error {
+  -webkit-animation: error 300ms ease forwards;
+  animation: error 300ms ease forwards;
+}
+
+.add-account-modal button {
+  background-color: #ffa61b;
+  border-radius: 4px;
+  border: 4px;
+  color: #fff;
+  float: right;
+  font-size: 14px;
+  padding: 5px 10px;
+  position: relative;
+  top: 60px;
+  right: -20px;
+}
+
+.add-account-modal button:hover {
+  background-color: #ffb31a;
+  cursor: pointer;
+}
+
+.add-account-modal button:focus {
+  outline: none;
+}
+
+.add-account-modal.is-visible {
+  visibility: visible;
+}
+
+.add-account-modal.is-visible .account {
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 1;
+}
+
+.add-account-modal.is-visible .overlay {
+  opacity: 0.8;
+}
+
+.temp-account {
+  color: #b2b2b2;
+  font-size: 24px;
+  font-style: italic;
+  padding: 50px 0;
+  text-align: center;
+}
+
+@-webkit-keyframes load {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+@keyframes load {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+@-webkit-keyframes error {
+  0% {
+    margin-left: 0;
+  }
+  33% {
+    margin-left: 30px;
+  }
+  66% {
+    margin-left: -30px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+@keyframes error {
+  0% {
+    margin-left: 0;
+  }
+  33% {
+    margin-left: 30px;
+  }
+  66% {
+    margin-left: -30px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}/*# sourceMappingURL=wallet.css.map */

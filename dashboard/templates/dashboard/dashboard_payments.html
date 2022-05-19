@@ -1,0 +1,130 @@
+{% extends 'dashboard_base.html' %} 
+{% block css %} {% include 'dashboard/dashboard_home_style.html' %} {% endblock css %} 
+{% block head_title %}{{title}}{% endblock head_title %} 
+{% block content %}
+<div class="home-container">
+  <div class="row m-0">
+    <div class="col-md-7 col-12">
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="row box-right" onclick="toggleAmount()">
+            <div class="col-md-8 ps-0">
+              <p class="ps-3 textmuted fw-bold h6 mb-0">BALANCE</p>
+              <p
+                class="h1 fw-bold d-flex"
+                id="bitcoin-toggle"
+                data-{{request.user.username}}-balance="{{bal}}"
+              >
+                <span
+                  class="fas fa-dollar-sign textmuted pe-1 h6 align-text-top mt-1"
+                ></span
+                >{{first_bal}} <span class="textmuted">.{{second_bal}}</span>
+              </p>
+              <!-- In Bitcoin -->
+              <p
+                class="h1 fw-bold d-flex d-none"
+                id="bitcoin-toggle"
+                data-{{request.user.username}}-balance="{{bal}}"
+              >
+                <span
+                  class="lab la-bitcoin textmuted pe-1 h6 align-text-top mt-1"
+                ></span>
+                <span
+                  class="bitcoin-amount"
+                  id="bitcoin-div"
+                  data-{{request.user.username}}-balance="{{bal}}"
+                >
+                  <span class="bitcoin_first">{{first_bal}}</span
+                  ><span class="bitcoin_last sm textmuted"
+                    >.{{second_bal}}</span
+                  >
+                </span>
+              </p>
+              {% if returns %}
+              <p class="ms-3 px-2 bg-green">{{returns}}</p>
+              {% endif %} {% if bad and returns == '' %}
+              <p class="ms-3 px-2 bg-red">{{bad}}</p>
+              {% endif %}
+            </div>
+            <div class="col-md-4">
+              {% if pending %}
+              <p class="p-blue">
+                <span class="fas fa-circle pe-2"></span>Pending
+              </p>
+              <p class="fw-bold mb-3">
+                <span class="fas fa-dollar-sign pe-1"></span>00
+                <span class="textmuted">.00</span>
+              </p>
+              {% endif %} {% if drafts %}
+              <p class="p-org">
+                <span class="fas fa-circle pe-2"></span>On drafts
+              </p>
+              <p class="fw-bold">
+                <span class="fas fa-dollar-sign pe-1"></span>00<span
+                  class="textmuted"
+                  >.00</span
+                >
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 px-0 mb-4">
+          <div class="box-right">
+            <div class="d-flex mb-2">
+              <p class="fw-bold">Cash-Out</p>
+              <p class="ms-auto textmuted">
+                <button
+                  class="fas fa-arrow-right fw-bold cash-out-btn waves-effect waves-dark"
+                  type="submit"
+                ></button>
+              </p>
+            </div>
+            <div class="d-flex mb-2">
+              <p class="h7">Min. $1,500 - Max. $35,000</p>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-2">
+                <p class="textmuted h8">Your Bitcoin Address</p>
+                <input
+                  class="form-control"
+                  type="text"
+                  value="{{user.profile.wallet.btc_address}}"
+                  placeholder=""
+                />
+              </div>
+              <div class="col-6">
+                <p class="textmuted h8">USD</p>
+                <input class="form-control" type="text" placeholder="00.00" />
+              </div>
+              <div class="col-6">
+                <p class="textmuted h8">BTC</p>
+                <input class="form-control" type="text" placeholder="00.00" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 col-12 ps-md-2 p-0">
+        <div class="box-left d-none">
+          <h1>dddd</h1>
+        </div>
+        <div class="box-left">
+            <div class="d-flex mb-2">
+                <p class="fw-bold">Transactions</p>
+              </div>
+              <ol class="activity-feed activity-container" style="{% if transactions.count > 4 %}height: 330px;{% endif %}">
+                {% for transaction in transactions %}
+                <li class="feed-item {% if transaction.status == 'credit' %}credit{% elif transaction.status == 'failed' %}failed{% elif transaction.status == 'pending' %}d-none{% endif %}">
+                  <time class="date" datetime="{{transaction.timestamp|date:'m'}}-{{transaction.timestamp|date:'d'}}">{{transaction.timestamp|date:"F"}} {{transaction.timestamp|date:"d"}} - 
+                    {{transaction.timestamp|date:"g"}}:{{transaction.timestamp|date:"i"}}{{transaction.timestamp|date:"A"}}</time>
+                  <span class="text">{{transaction.msg}}</a></span>
+                </li>
+                {% endfor %}
+              </ol>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock content %}

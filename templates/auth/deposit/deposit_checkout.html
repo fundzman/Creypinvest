@@ -1,0 +1,161 @@
+{% extends 'base.html' %} {% load static %}
+<title>{% block title %}${{display_price}} Deposit{% endblock title %}</title>
+{% block css %}<link
+  rel="stylesheet"
+  href="{% static 'css/checkout.css' %}"
+/>
+<style>
+    input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+</style>
+{% endblock css %} {% block content %}
+<div class="checkout-container bg-light d-md-flex align-items-center">
+  <div class="card box1 shadow-sm p-md-5 p-md-5 p-4">
+    <div class="fw-bolder mb-4">
+      <span class="fas fa-dollar-sign"></span
+      ><span class="ps-1">{{display_price}}</span>
+    </div>
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between text">
+        <span class="">You Pay</span>
+        <span class="fas fa-bitcoin-sign"
+          ><span class="ps-1 convert-value-btc" data-btc-value="{{raw_price}}"
+            >loading...</span
+          ></span
+        >
+      </div>
+      <div class="d-flex align-items-center justify-content-between text">
+        <span class="">Fees</span>
+        <span class="fas fa-dollar-sign"
+          ><span
+            class="ps-1 calculate-btc-fees"
+            data-price-value="{{raw_price}}"
+            >0.00</span
+          ></span
+        >
+      </div>
+      <div class="d-flex align-items-center justify-content-between text mb-4">
+        <span>Total</span>
+        <span class="fas fa-dollar-sign"
+          ><span class="ps-1 total-price-value">{{display_price}}.00</span></span
+        >
+      </div>
+      <div class="border-bottom mb-4"></div>
+      <div class="d-flex flex-column mb-4">
+        <span class="text"> <i class="fa-solid fa-cubes"></i>
+          <span class="ps-2"> Plan:</span></span
+        >
+        <span class="ps-4"
+          >{% if plan == 'starter' %}Starter $500 - $5,000{% elif plan == 'exchange-traded-funds' %}Exchange-Traded Funds $10,000 - $15,000{% else %}Expert Trader
+          $25,000 and above{% endif %}</span
+        >
+      </div>
+      <div class="d-flex flex-column mb-5">
+        <span class="text">
+          <i class="fa-solid fa-credit-card"></i>
+          <span class="ps-2">Payment Method:</span></span>
+        <span class="ps-4">Bitcoin Transfer</span>
+      </div>
+      <div class="d-flex align-items-center justify-content-between text mt-5">
+        <div class="d-flex flex-column text">
+          <span>Customer Support:</span> <span>email us</span>
+        </div>
+        <div class="btn btn-primary rounded-circle">
+          <a href="mailto:creypinvest@gmail.com">
+            <span class="fas fa-comment-alt"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card box2 shadow-sm">
+    <div class="d-flex align-items-center justify-content-between p-md-5 p-4">
+      <span class="h5 fw-bold m-0">Payment methods</span>
+    </div>
+    <ul class="nav nav-tabs mb-3 px-md-4 px-2">
+      <li class="nav-item">
+        <a class="nav-link px-2 active" aria-current="page" href="#"
+          >Manually</a
+        >
+      </li>
+    </ul>
+    {% if not user.first_name or not user.last_name or not user.profile.wallet.pin %}
+    {% if error %}
+    <span class="px-2 py-1 border" style="color:rgba(200, 41, 41, 0.937) !important;">{{error}}</span>
+    {% endif %}
+    <div class="text-center mb-5"><h4>Complete This Form</h4></div>
+    {% endif %}
+    <form action="{% url 'deposit_window' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="plan" value="{{plan}}">
+      <input type="hidden" name="price" value="{{raw_price}}" required>
+      <input type="hidden" class="btc-hidden-value" name="price_btc" value="{{raw_price}}" required>
+      
+      <input type="hidden" class="price-fees-hidden-value" name="price_fees" value="{{raw_price}}" required>
+      <input type="hidden" class="btc-fees-hidden-value" name="price_fees_btc" value="{{raw_price}}" required>
+
+      <input type="hidden" class="total-price-hidden-value" name="price_total" value="{{price}}" required>
+      <input type="hidden" class="total-btc-hidden-value" name="price_total_btc" value="{{raw_price}}" required>
+      <div class="row">
+        {% if not user.first_name %}
+        <div class="{% if user.last_name %}col-12{% else %}col-md-6{% endif %}">
+          <div class="{% if not user.last_name %}
+          d-flex flex-column ps-md-5 px-4 mb-4
+          {% else %}
+          d-flex flex-column pe-md-5 px-md-0 px-4 mb-4
+          {% endif %}">
+            <span>First<span class="ps-1">Name</span></span>
+            <div class="inputWithIcon">
+              <input type="text" name="first_name" class="form-control" required />
+              <span class="far fa-user"></span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if not user.last_name %}
+        <div class="{% if user.first_name %}col-12{% else %}col-md-6{% endif %}">
+          <div class="
+          {% if not user.first_name %}
+          d-flex flex-column pe-md-5 px-md-0 px-4 mb-4
+          {% else %}
+          d-flex flex-column px-md-5 px-4 mb-4
+          {% endif %}
+          ">
+            <span>Last Name</span>
+            <div class="inputWithIcon">
+              <input type="test" name="last_name" class="form-control" required />
+              <span class="fas fa-pen"></span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if not user.profile.wallet.pin %}
+        <div class="col-12">
+          <div class="d-flex flex-column px-md-5 px-4 mb-4">
+            <span>Set Pin</span>
+            <div class="inputWithIcon">
+              <input
+                class="form-control text-uppercase"
+                type="text"
+                name="pin1"
+                maxlength="6"
+                minlength="6"
+                placeholder="6 digit pin"
+                required
+              />
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="col-12 px-md-5 px-4 mt-3">
+          <button type="submit" name="action" class="btn btn-primary w-100"><span class="total-price-value" data-before-text="Pay $">Pay ${{display_price}}</span></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

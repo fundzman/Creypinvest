@@ -1,0 +1,28 @@
+<!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-8 align-self-center">
+                        <h3 class="page-title mb-0 p-0">{{title}}</h3>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    {% if crumbs_count > 1 %}
+                                    <li class="breadcrumb-item"><a href="{% url 'dashboard-home' %}">Dashboard</a></li>
+                                    {% else %}
+                                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                                    {% endif %}
+                                    {% for crumb in crumbs %}
+                                    <li class="breadcrumb-item" aria-current="page">{{crumb}}</li>
+                                    {% endfor %}
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->

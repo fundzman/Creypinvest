@@ -1,0 +1,415 @@
+$purple: #24126a;
+$green: #86b360;
+$grey: #eeeeee;
+$light-grey: #f5f7f9;
+$eee: #eeeeee;
+$ccc: #3a4542;
+$black: #595959;
+$send: #26145a;
+
+.make-default {
+  padding-top: 10px;
+  label {
+    margin-right: 10px;
+  }
+}
+.why-default {
+  &:hover {
+    &:after {
+      content: "By selecting this checkbox, the bitcoin address you a enter here will be your current bitcoin address";
+      position: absolute;
+      margin-left: 5px;
+      background: darken($purple, 25%);
+      color: white;
+      padding: 5px;
+      border-radius: 3px;
+      width: 150px;
+      font-size: 13px;
+      z-index: 10000;
+    }
+  }
+}
+
+.default-note-group {
+  display: flex;
+  flex-direction: column;
+}
+.note-msg {
+  color: $ccc;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+textarea {
+  border-radius: 3px;
+  border-color: $eee;
+  height: 60px;
+  width: 300px;
+  &:focus {
+    outline: none;
+  }
+}
+
+.total-amounts {
+  display: flex;
+  flex-direction: column;
+}
+.amount-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+  p {
+    margin: 0;
+    flex: 1;
+    color: $ccc;
+    font-size: 14px;
+  }
+  span {
+    font-size: 11px;
+    margin-left: 10px;
+    font-weight: 200;
+    &:hover {
+      cursor: pointer;
+      &:after {
+        content: "Fees are given to the miners who verify your transaction on the blockchain";
+        position: absolute;
+        margin-left: 5px;
+        background: #000000d9;
+        color: white;
+        transform: translate(-100px, 18px);
+        padding: 5px;
+        border-radius: 10px;
+        min-width: 100px;
+        font-size: 13px;
+        z-index: 10000;
+      }
+    }
+  }
+}
+.total-item {
+  border-top: 2px solid RGBA(4, 4, 4, 0.1);
+  border-radius: 3px;
+  p {
+    color: $purple;
+  }
+}
+
+input[readonly="readonly"] {
+  color: $ccc;
+  margin-left: 10px;
+  border-bottom: none !important;
+}
+
+.available {
+  color: $ccc;
+  margin-top: 30px;
+  margin-bottom: 5px;
+  padding: 0;
+  font-weight: 300;
+  font-size: 13px;
+}
+
+.actions {
+  border-top: 1px solid #00000024;
+  // border-top: 1px solid $eee;
+  padding: 2em;
+  display: flex;
+  justify-content: flex-end;
+  .cancel {
+    border: none;
+    background: transparent;
+    color: $ccc;
+    margin-right: 10px;
+  }
+  .next {
+    background: $black;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    transition: all 0.5s ease-in-out;
+    &:hover {
+      text-decoration: none;
+      background: darken($black, 10%);
+    }
+  }
+  .fa-chevron-right,
+  .fa-check {
+    color: white;
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  .next.send {
+    cursor: pointer;
+    padding: 12px 36px;
+    background: linear-gradient(90deg, $send, #2b3cff);
+    transition: all 500ms ease;
+    &:hover {
+      text-decoration: none;
+      background: linear-gradient(270deg, $send, #2b3cff);
+    }
+  }
+}
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
+.fa-arrows-h {
+  color: $ccc;
+  padding: 0px 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.label {
+  color: $purple;
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.btc-amount {
+  border-bottom: 1px solid $ccc;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  label {
+    margin: 0;
+    color: darken($ccc, 45%) !important;
+  }
+  input {
+    border: none;
+    background: transparent;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.amount-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  label {
+    margin-right: 10px;
+  }
+}
+
+.send-by {
+  list-style-type: none;
+  position: absolute;
+  top: 0px;
+  right: 25px;
+  li {
+    display: inline-block;
+    margin: 0 10px;
+    color: $ccc;
+    &.active {
+      color: $purple;
+      font-weight: 700;
+    }
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+.hidden {
+  opacity: 0;
+}
+.to-field,
+.default-note {
+  position: relative;
+  label {
+    margin-bottom: 15px;
+  }
+}
+
+.btc {
+  display: flex;
+  flex-direction: column;
+}
+#btc {
+  border-bottom: 1px solid !important;
+  border-left: 1px solid;
+  border-top: 1px solid;
+  border: 1px solid;
+  padding-left: 10px;
+  border-radius: 24px 0px 0px 24px;
+  margin-left: 0 !important;
+}
+.copy-generated-address {
+  height: 21px;
+  width: 22px;
+  position: absolute;
+  right: 29px;
+  top: 50px;
+  background: #fdfdfd;
+  border: 1px solid #5757ab;
+  border-radius: 0px 5px 5px 0px;
+  padding: 5px;
+  font-size: 21px;
+  &:hover {
+    cursor: pointer;
+    background: #efefef;
+    &:after {
+      content: "Copy";
+      position: absolute;
+      left: -6px;
+      animation: swipeUp 0.5s ease;
+      bottom: 34px;
+      background: #0c0b0bc9;
+      color: white;
+      padding: 5px;
+      border-radius: 10px;
+      min-width: max-content;
+      font-size: 13px;
+      z-index: 10000;
+
+      @keyframes swipeUp {
+        50% {
+          bottom: 38px;
+        }
+      }
+    }
+  }
+  &.copyed:hover:after {
+    content: "Copyed";
+  }
+}
+.control-group {
+  padding: 1em 2em;
+  background: white;
+  input[type="text"] {
+    border: none;
+    background: transparent;
+    padding: 8px 0;
+    border-bottom: 1px solid $ccc;
+    min-width: 350px;
+    &:focus {
+      outline: none;
+      -webkit-appearance: none;
+    }
+  }
+  label {
+    color: darken($ccc, 45%);
+  }
+}
+.step {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 11px;
+  padding-right: 14px;
+}
+
+.form-title {
+  color: $purple;
+  padding: 1em 2em;
+  h5 {
+    font-weight: 500;
+    color: darken($ccc, 10%);
+    margin-bottom: 5px;
+    margin-top: 0;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    width: 50px;
+    margin-right: 25px;
+  }
+  h2 {
+    font-weight: 300;
+  }
+}
+
+form {
+  transition: all 1s ease-in-out;
+}
+
+.form-wrapper {
+  box-shadow: 0 5px 1px 0 rgba(0, 40, 68, 0.4);
+  border-radius: 24px;
+  background: $light-grey;
+  position: relative;
+  margin: 1em;
+
+  @media screen and (max-width: 425px) {
+    transform: scale(0.86);
+  }
+  @media screen and (max-width: 320px) {
+    transform: scale(0.8);
+  }
+}
+
+.collapse {
+  -webkit-animation: collapse 0.6s linear 0s 1;
+  animation: collapse 0.6s linear 0s 1;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+::-webkit-input-placeholder {
+  color: $ccc;
+}
+
+html,
+body {
+  height: 100%;
+  background: $purple;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto", "Lato", sans-serif;
+  font-weight: 400;
+}
+
+//animation crud
+@keyframes collapse {
+  10% {
+    transform: scale(0.9);
+  }
+  20% {
+    transform: scale(0.8);
+  }
+  30% {
+    transform: scale(0.7);
+  }
+  40% {
+    transform: scale(0.6);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  60% {
+    transform: scale(0.6);
+  }
+  70% {
+    transform: scale(0.7);
+  }
+  80% {
+    transform: scale(0.8);
+  }
+  90% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

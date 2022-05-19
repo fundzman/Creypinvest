@@ -1,0 +1,21 @@
+{% load static %}
+<div
+  class="breadcrumbs"
+  style="background-image: url({% static 'images/bread-bg/banner-bg.svg' %})"
+>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 offset-lg-3 col-md-12 col-12">
+        <div class="breadcrumbs-content">
+          <h1 class="page-title">{{title}}</h1>
+          <ul class="breadcrumb-nav">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            {% if crumbs %} {% for crumb in crumbs %}
+            <li>{{crumb|safe}}</li>
+            {% endfor %} {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

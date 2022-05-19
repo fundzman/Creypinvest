@@ -1,0 +1,150 @@
+{% extends 'dashboard_base.html' %} 
+{% load static %}
+{% block css %}  {% endblock css %} 
+{% block head_title %}{{title}}{% endblock head_title %}
+{% block content %}
+<!-- Column -->
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-lg-4 col-xlg-3 col-md-5">
+      <div class="card box-shadow">
+          <div class="card-body profile-card">
+              <center class="mt-4"> <img onclick="document.getElementById(`upload-image`).click()"
+                style="width: 100px;height: 100px;" id="profile-image-output" src="{% if user.profile.image %}{{user.profile.image.url}}{% else %}{% static 'images/profile-image-placeholder.png' %}{% endif %}"
+                      class="rounded-circle" width="100" />
+                  <h4 class="card-title mt-2">{{user.first_name}} {{user.last_name}}</h4>
+                  <h6 class="card-subtitle">@{{user.username}}</h6>
+                  <div class="row d-none justify-content-center">
+                      <div class="col-4">
+                          <a href="javascript:void(0)" class="link">
+                              <i class="icon-people" aria-hidden="true"></i>
+                              <span class="font-normal">254</span>
+                          </a></div>
+                      <div class="col-4">
+                          <a href="javascript:void(0)" class="link">
+                              <i class="icon-picture" aria-hidden="true"></i>
+                              <span class="font-normal">54</span>
+                          </a></div>
+                  </div>
+              </center>
+          </div>
+      </div>
+  </div>
+  <!-- Column -->
+  <!-- Column -->
+  <div class="col-lg-8 col-xlg-9 col-md-7">
+      <div class="card box-shadow">
+          <div class="card-body">
+            <!-- Main Profile Form -->
+              <form action="{% url 'dashboard-password-update' %}" method="POST" enctype="multipart/form-data" class="form-horizontal form-material mx-2">
+                {% csrf_token %}  
+                <div class="form-group">
+                      <label class="col-md-12 mb-0">Upload Profile Image</label>
+                      <div class="col-md-12">
+                          <input type="file" onchange="loadProfileImageFile(event)" name="profile_image" id="upload-image" accept="image/*"
+                              class="form-control ps-0 form-control-line">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-12 mb-0">Full Name</label>
+                    <div class="col-md-12">
+                        <input type="text" name="full_name" placeholder=""
+                        value="{{user.first_name}} {{user.last_name}}"
+                            class="form-control ps-0 form-control-line">
+                    </div>
+                </div>
+                  <div class="form-group">
+                      <label for="example-email" class="col-md-12">Email</label>
+                      <div class="col-md-12">
+                          <input type="email" placeholder="example@example.com"
+                              class="form-control ps-0 form-control-line" name="email"
+                              value="{{user.email}}"
+                              id="example-email">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-md-12 mb-0">Phone No</label>
+                      <div class="col-md-12">
+                          <input type="number" name="phone_number" placeholder=""
+                              class="form-control ps-0 form-control-line">
+                      </div>
+                      <small>don't forget to add your country code. eg: +1</small>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-12">Select Gender</label>
+                    <div class="col-sm-12 border-bottom">
+                        <select name="gender" class="form-select shadow-none border-0 ps-0 form-control-line">
+                            <option>select gender</option>
+                            {% if user.profile.gender == 'female' %}
+                            <option value="female" selected>Female</option>
+                            {% else %}
+                            <option value="female">Female</option>
+                            {% endif %}
+
+                            {% if user.profile.gender == 'male' %}
+                            <option value="male" selected>Male</option>
+                            {% else %}
+                            <option value="male">Male</option>
+                            {% endif %}
+
+                            {% if user.profile.gender == 'others' %}
+                            <option value="others" selected>Others</option>
+                            {% else %}
+                            <option value="others">Others</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                  <div class="form-group">
+                      <label class="col-sm-12">Select Country</label>
+                      <div class="col-sm-12 border-bottom">
+                        <select id="country" name="country" class="form-select shadow-none border-0 ps-0 form-control-line">
+                          <option>select country</option>
+                          {% for code, name in countries %}
+                          <option value="{{code}}" {% if code == user.profile.country %}selected="selected"{% endif %}>{{name}}</option>
+                          {% endfor %}
+                      </select>
+                          
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-12 d-flex">
+                          <button type="submit" class="btn btn-success mx-auto mx-md-0 text-white">Update
+                              Profile</button>
+                      </div>
+                  </div>
+              </form>
+
+              <!-- Change Password -->
+              <form action="{% url 'account_change_password' %}" method="get" class="form-horizontal form-material mx-2">
+                {% csrf_token %}  
+              <div class="form-group">
+                <label class="col-md-12 mb-0">Password</label>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="col-sm-12 d-flex">
+                        <button type="submit" class="btn btn-success mx-auto mx-md-0 text-white">Change
+                            Password</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </form>
+          </div>
+      </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->
+<script>
+  var loadProfileImageFile = function(event) {
+    var output = document.getElementById('profile-image-output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
+<!-- Column -->
+{% endblock content %}

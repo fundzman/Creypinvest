@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="btc,bitcoin,money,address,payment,trade,secure,encryption,invest" />
+    <meta
+      name="description"
+      content="Invest For A Bigger Future With Cryptocurrency As Stock Market"
+    />
+    <meta name="author" content="Creyp Invest inc." />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
+    
+    <link rel="manifest" href="{% static 'site.webmanifest' %}" />
+
+    <title>CreypInvest - {% block title %} {% endblock title %}</title>
+
+    <!-- bootstrap core css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap.min.css' %}"
+    />
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+    <link
+    rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+  />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/tiny-slider.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/glightbox.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+    <!-- fonts style -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- font awesome style -->
+    <script src="https://kit.fontawesome.com/f75233d904.js" crossorigin="anonymous"></script>
+
+    <!-- Custom styles -->
+    {% block css %}
+    {% endblock css %}
+    <style>
+      .e-btn{
+    align-items: center;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: .875rem;
+    letter-spacing: .25px;
+    background: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #5f6368;
+    cursor: pointer;
+    font-weight: 500;
+    height: 36px;
+    min-width: 80px;
+    padding: 0 16px;
+    margin-left: -16px;
+    outline: none;
+    text-decoration: none;
+}
+    </style>
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- [if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif] -->
+      
+    <div class="preloader">
+      <div class="preloader-inner">
+        <div class="preloader-icon">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+      <!-- header section -->
+      {% include 'components/navbar.html' %}
+      <!-- end header section -->
+      {% if type %}
+      <!-- Breadcrumbs Section -->
+      {% include 'components/breadcrumbs.html' with crumbs=crumbs title=type %}
+      <!-- End Breadcrumbs Section -->
+      {% endif %}
+    {% block content %} {% endblock content %}
+
+    <!-- footer section -->
+    {% include 'components/footer.html' %}
+    <!-- end footer section -->
+    <a href="#" class="scroll-top">
+      <i class="lni lni-chevron-up"></i>
+    </a>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/tiny-slider.js' %}"></script>
+    <script src="{% static 'js/glightbox.min.js' %}"></script>
+    <script src="{% static 'js/count-up.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+      //========= Road Map
+      tns({
+        container: ".road-map-slider",
+        items: 1,
+        slideBy: "page",
+        autoplay: false,
+        mouseDrag: true,
+        gutter: 0,
+        nav: true,
+        controls: false,
+        responsive: {
+          0: {
+            items: 2,
+          },
+          540: {
+            items: 3,
+          },
+          768: {
+            items: 4,
+          },
+          992: {
+            items: 4,
+          },
+          1170: {
+            items: 6,
+          },
+        },
+      });
+
+      //========= testimonial
+      tns({
+        container: ".testimonial-slider",
+        items: 3,
+        slideBy: "page",
+        autoplay: false,
+        mouseDrag: true,
+        gutter: 0,
+        nav: true,
+        controls: false,
+        responsive: {
+          0: {
+            items: 1,
+          },
+          540: {
+            items: 1,
+          },
+          768: {
+            items: 2,
+          },
+          992: {
+            items: 2,
+          },
+          1170: {
+            items: 3,
+          },
+        },
+      });
+
+      //====== counter up
+      var cu = new counterUp({
+        start: 0,
+        duration: 2000,
+        intvalues: true,
+        interval: 100,
+        append: " ",
+      });
+      cu.start();
+    </script>
+    <!-- Start of txt.me widget code -->
+    <script
+      src="https://v2.txt.me/livechat/js/wrapper/f019e840816b491d9fdd77c868d76bcd"
+      async
+    ></script>
+    <noscript><a
+        href="https://txt.me/reviews/f019e840816b491d9fdd77c868d76bcd"
+        rel="nofollow"
+        >Rate Creyp customer support</a></noscript>
+
+    <!-- End of txt.me widget code -->
+    
+    <!-- jQuery -->
+    <!-- <script
+      type="text/javascript"
+      src="{% static 'js/jquery-3.4.1.min.js' %}"
+    ></script> -->
+    {% block js %}{% endblock js %}
+    <script src="{% static 'js/user_ip.js' %}" defer></script>
+  </body>
+</html>
