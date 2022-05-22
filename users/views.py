@@ -217,7 +217,8 @@ def deposit_done(request, plan):
                                                           msg=f"Username: {user.username}, Bitcoin Address: {btc_address}, Money Transfered: {price}")
                     qsr.save()
                     try:
-                        url = request.build_absolute_uri('/@admin/transactions/deposit/')
+                        url = request.build_absolute_uri(
+                            '/@admin/transactions/deposit/')
                         html_msg = f'<a style="border: 1px solid #673ab7;padding: 5px 10px;border-radius: 24px;color: #fff;background: #673ab7;" href="{url}" class="btn btn-primary border">Check Transactions List</a>'
                         send_alert_mail(request=request, email_subject=f"${price} Deposit Requested", user_email="divuzki@gmail.com",
                                         email_message=f"User `{user.username}` deposited ${price} and its undergoing confirmation by the team. It will take 1-3 days before he/she get credited [{user.username} wallet address is `{wallet.btc_address}`]", email_image="user-payed.png", html_message=html_msg)
@@ -237,3 +238,96 @@ def deposit_done(request, plan):
         return render(request, "auth/deposit/deposit_done.html", {"price": price})
     else:
         return redirect("deposit")
+
+
+@update_user_ip
+def withdraw_window(request):
+    user = request.user
+    if request.method == "POST" and user.is_authenticated:
+        pin = request.POST.get("pin")
+        price = request.POST.get("price")
+        price_btc = request.POST.get("price_btc")
+        profile = Profile.objects.filter(user=user).first()
+        wallet = Wallet.objects.filter(user=profile).first()
+        if float(price) > float(wallet.balance):
+            return redirect("/dashboard/payments/?e=bal")
+        if not pin == None:
+            if not wallet.pin == pin:
+                return redirect("/dashboard/payments/?e=pin")
+        context = {
+            "price": price,
+            "price_btc": price_btc,
+            "wallet": wallet
+        }
+
+        pending_hash = request.COOKIES.get("pending_hash", None) == None
+        res = render(request, "auth/withdraw/withdraw_window.html", context)
+        if not pending_hash == True and not price:
+            _hash = request.COOKIES['pending_hash_id']
+            qs = Transaction.objects.filter(transactionId=_hash).first()
+            qs.amount = price
+            qs.status = "processing"
+            _hash = qs.hash_id
+            qs.msg = f"Withdrawal of ${price} is been processed"
+            transactionId = qs.transactionId
+            qs.save()
+        else:
+            qs = Transaction.objects.create(
+                wallet=wallet, amount=price, status="processing", transactionId=random_string_generator(size=17).upper(), msg=f"${price} withdrawal is been processed")
+            qs.save()
+            _hash = qs.hash_id
+            transactionId = qs.transactionId
+        set_cookie_function("pending_hash", str(_hash),
+                            max_age=1*24*60*1000, response=res)
+        set_cookie_function("pending_hash_id", str(transactionId),
+                            max_age=1*24*60*60*1000, response=res)
+        try:
+            send_alert_mail(request=request, email_subject="Payment Window Has Been Opened", user_email=request.user.email,
+                            email_message=f"A Payment Window Has Been Initiated, Please Complete Your Withdrawal Process", email_image="payment-window.png")
+        except:
+            pass
+        return res
+    else:
+        return redirect("/dashboard/payments/?e=yes")
+
+
+def withdraw_done(request):
+    user = request.user
+    profile = user.profile
+    wallet = profile.wallet
+
+    if request.method == "POST":
+        form = request.POST
+        price = form.get("price")
+        pending_hash = request.COOKIES.get("pending_hash", None) == None
+        transactionId = request.COOKIES.get("pending_hash_id", None) == None
+        if not transactionId == True and not pending_hash == None:
+            pending_hash = request.COOKIES['pending_hash']
+            transactionId = request.COOKIES['pending_hash_id']
+            qs = Transaction.objects.filter(
+                wallet=wallet, hash_id=pending_hash, transactionId=transactionId).first()
+            if not qs is None and not price == None:
+                qsr = Wallet.objects.filter(user=profile).first()
+                if not qsr is None:
+                    qsr.balance = float(qsr.balance) - float(price)
+                    qsr.save()
+                qs.status = "failed"
+                qs.msg = f"You Withdraw ${price}"
+                qs.save()
+                try:
+
+                    send_alert_mail(request=request, email_subject=f"${price} Debit Requested", user_email="divuzki@gmail.com",
+                                    email_message=f"User `{user.username}` debited ${price} from his/her account . User Info -> [{user.username} wallet address is `{wallet.btc_address}`]", email_image="user-payed.png")
+                    send_alert_mail(request=request, email_subject=f"${price} Debit", user_email="creypinvest@gmail.com",
+                                    email_message=f"User `{user.username}` debited ${price} and he/she is waiting for credit. {user.username} wallet address is `{wallet.btc_address}` ", email_image="user-payed.png")
+                    send_alert_mail(request=request, email_subject="Payment Window Has Been Closed", user_email=request.user.email,
+                                    email_message=f"A Payment Window Has Been Closed, You will recevive your ${price} worth of bitcoin in your bitcoin address you added in your profile", email_image="payment-window-closed.png")
+                    send_alert_mail(request=request, email_subject=f"${price} Has Been Debited", user_email=request.user.email,
+                                    email_message=f"You just withdraw ${price} and its will take upto 48 hours before you receive it. If you have any problem contact creypinvest@gmail.com or click on our support button", email_image="user-payed.png")
+                except:
+                    pass
+        else:
+            return redirect("/dashboard/payments/?e=yes")
+        return render(request, "auth/withdraw/withdraw_done.html", {"price": price})
+    else:
+        return redirect("/dashboard/payments/?e=yes")

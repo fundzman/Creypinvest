@@ -1,5 +1,13 @@
 {% extends 'dashboard_base.html' %} 
-{% block css %} {% include 'dashboard/dashboard_home_style.html' %} {% endblock css %} 
+{% block css %} 
+<style>
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+-webkit-appearance: none; 
+margin: 0; 
+}
+</style>
+{% include 'dashboard/dashboard_home_style.html' %} {% endblock css %} 
 {% block head_title %}{{title}}{% endblock head_title %} 
 {% block content %}
 <div class="home-container">
@@ -70,7 +78,8 @@
           </div>
         </div>
         <div class="col-12 px-0 mb-4">
-          <div class="box-right">
+          <form action="{% url 'withdraw_window' %}" autocomplete="off" method="POST" class="box-right">
+            {% csrf_token %}
             <div class="d-flex mb-2">
               <p class="fw-bold">Cash-Out</p>
               <p class="ms-auto textmuted">
@@ -83,6 +92,15 @@
             <div class="d-flex mb-2">
               <p class="h7">Min. $1,500 - Max. $35,000</p>
             </div>
+            {% if request.GET.e %}
+            <div class="d-flex mb-2 mt-2">
+            <p class="h8" style="color: rgb(240, 56, 56);">
+              {% if request.GET.e == 'bal' %}bal: {{user.profile.wallet.balance}} - Insufficient Funds{% endif %}
+              {% if request.GET.e == 'pin' %}Pin Not Correct{% endif %}
+              {% if request.GET.e == 'yes' %}Something went wrong, try again later{% endif %}
+            </p>
+          </div>
+            {% endif %}
             <div class="row">
               <div class="col-12 mb-2">
                 <p class="textmuted h8">Your Bitcoin Address</p>
@@ -95,20 +113,30 @@
               </div>
               <div class="col-6">
                 <p class="textmuted h8">USD</p>
-                <input class="form-control" type="text" placeholder="00.00" />
+                <div class="d-flex form-control"> <span class="fas fa-dollar-sign textmuted mt-1 fw-bold font-bold"></span> 
+                <input class="w-100 border-0 textmuted fw-bold font-bold" min="1500" max="35000" id="usd_input" name="price" type="number" placeholder="00.00" required="true"/>
+              </div>
               </div>
               <div class="col-6">
                 <p class="textmuted h8">BTC</p>
-                <input class="form-control" type="text" placeholder="00.00" disabled />
+                <div class="d-flex form-control"> <span class="lab la-bitcoin textmuted mt-1 fw-bold font-bold"></span> 
+                  <input class="w-100 border-0 textmuted fw-bold font-bold" id="btc_input" min="0" autocomplete="false" readonly onfocus="this.removeAttribute('readonly')" name="price_btc" type="tel" placeholder="00.00" required="true"/>
+                </div>
               </div>
+              {% if user.profile.wallet.pin %}
+              <div class="col-12 mt-2">
+                <p class="textmuted h8">PIN</p>
+                  <input class="form-control textmuted fw-bold font-bold" minlength="6" maxlength="6" name="pin" type="text" placeholder="" required="true"/>
+              </div>
+              {% endif %}
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
     <div class="col-md-5 col-12 ps-md-2 p-0">
         <div class="box-left d-none">
-          <h1>dddd</h1>
+          <!-- <h1>u are secured and safe!</h1> -->
         </div>
         <div class="box-left">
             <div class="d-flex mb-2">
@@ -127,4 +155,55 @@
       </div>
   </div>
 </div>
+<script>
+  var usdInput = document.getElementById("usd_input");
+  var btcInput = document.getElementById("btc_input");
+  var btc_current_price = localStorage.getItem("btc_current_price");
+
+  usdInput.addEventListener("keyup", function(e){
+    btcReload();
+    if (usdInput.value === ""){
+      btcInput.value = ""
+    }else{
+      if(btcInput && btc_current_price && usdInput.value !== ""){
+        btcInput.value = (usdInput.value / btc_current_price).toFixed(6)
+      }else{
+        window.location.reload();
+      }
+    }
+  })
+  btcInput.addEventListener("keyup", function(e){
+    btcReload();
+    if (btcInput.value === ""){
+      usdInput.value = ""
+    }else{
+      if(usdInput && btc_current_price && btcInput.value !== ""){
+        usdInput.value = (btc_current_price * btcInput.value).toFixed(2)
+      }else{
+        window.location.reload();
+      }
+    }
+  });
+</script>
+<script>
+  function btcReload(){
+    let timer;
+    clearTimeout(timer);
+    // BTC CURRENT PRICE
+    var bitcoinPrice = new XMLHttpRequest();
+    bitcoinPrice.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          localStorage.setItem("btc_current_price", JSON.parse(this.responseText).RAW.BTC.USD.PRICE)
+        }
+      };
+      bitcoinPrice.open(
+        "GET",
+        "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD",
+        true
+        );
+    timer = setTimeout(() => {
+      bitcoinPrice.send();
+    }, 1000);
+  }
+</script>
 {% endblock content %}
