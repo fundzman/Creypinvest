@@ -8,7 +8,6 @@ from creyp.utils import random_string_generator, file_cleanup, image_resize
 
 from PIL import Image
 from django_countries.fields import CountryField
-from django.core.files.storage import default_storage as storage
 
 
 STATUS = (
@@ -104,7 +103,10 @@ class AdminTransaction(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.wallet.btc_address} transfered ${self.amount}"
+        if self.plan == "withdraw":
+            return f"{self.wallet.btc_address} debited ${self.amount}"
+        else:
+            return f"{self.wallet.btc_address} transfered ${self.amount}"
 
 @receiver(post_save, sender=User)
 def update_profile_signal(sender, instance, created, **kwargs):

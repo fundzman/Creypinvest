@@ -7,12 +7,12 @@
       <p style="font-size: small; color:rgba(0, 0, 0, 0.586)">No Transactions</p>
       {% endif %}
       {% for object in objects %}
-      <li id="{% if object.plan == 'withdraw' %}withdraw{% else %}deposit{% endif %}"><a href="#">{{object}}</a>
+      <li id="{% if object.plan == 'withdraw' %}w{% else %}withdraw{% endif %}"><a href="#">{{object}}</a>
         <ul style="display: flex; list-style: none">
           [<li>
             <a
               style="color: green; margin-right: 0.5rem"
-              href="{% url 'admin-transaction-accept' object.pk %}"
+              href="{% url 'admin-transaction-withdraw-accept' object.pk %}"
               >Accept</a
             >
           </li>
@@ -20,7 +20,7 @@
           <li>
             <a
               style="color: red; margin-left: 0.5rem"
-              href="{% url 'admin-transaction-delete' object.pk %}"
+              href="{% url 'admin-transaction-withdraw-delete' object.pk %}"
               >Decline</a
             >
           </li>

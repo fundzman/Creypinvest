@@ -299,6 +299,7 @@ def withdraw_done(request):
     if request.method == "POST":
         form = request.POST
         price = form.get("price")
+        price_btc = form.get("price_btc")
         pending_hash = request.COOKIES.get("pending_hash", None) == None
         transactionId = request.COOKIES.get("pending_hash_id", None) == None
         if not transactionId == True and not pending_hash == None:
@@ -306,24 +307,29 @@ def withdraw_done(request):
             transactionId = request.COOKIES['pending_hash_id']
             qs = Transaction.objects.filter(
                 wallet=wallet, hash_id=pending_hash, transactionId=transactionId).first()
-            if not qs is None and not price == None:
+            if not qs is None and not price == None and not price_btc == None:
                 qsr = Wallet.objects.filter(user=profile).first()
                 if not qsr is None:
                     qsr.balance = float(qsr.balance) - float(price)
+                    qsd = AdminTransaction.objects.create(wallet=wallet, plan="withdraw", amount=price, transactionId=transactionId, btc_address={user.profile.wallet.btc_address},
+                                                        msg=f"Username: {user.username}, Bitcoin Address: {user.profile.wallet.btc_address}, Money Withdrawn - USD: <b>{price}<b> - BTC: <b>{price_btc}<b>")
+                    qsd.save()
                     qsr.save()
-                qs.status = "failed"
+                qs.status = "credit"
                 qs.msg = f"You Withdraw ${price}"
                 qs.save()
                 try:
-
+                    url = request.build_absolute_uri('/@admin/transactions/withdrawals/')
+                    html_msg = f'<a style="border: 1px solid #673ab7;padding: 5px 10px;border-radius: 24px;color: #fff;background: #673ab7;" href="{url}" class="btn btn-primary border">Check Transactions List</a>'
                     send_alert_mail(request=request, email_subject=f"${price} Debit Requested", user_email="divuzki@gmail.com",
-                                    email_message=f"User `{user.username}` debited ${price} from his/her account . User Info -> [{user.username} wallet address is `{wallet.btc_address}`]", email_image="user-payed.png")
+                                    email_message=f"User `{user.username}` debited ${price} from his/her account . User Info -> [{user.username} wallet address is `{wallet.btc_address}`]", email_image="user-payed.png", html_message=html_msg)
                     send_alert_mail(request=request, email_subject=f"${price} Debit", user_email="creypinvest@gmail.com",
-                                    email_message=f"User `{user.username}` debited ${price} and he/she is waiting for credit. {user.username} wallet address is `{wallet.btc_address}` ", email_image="user-payed.png")
+                                    email_message=f"User `{user.username}` debited ${price} and he/she is waiting for credit. {user.username} wallet address is `{wallet.btc_address}` ", email_image="user-payed.png", html_message=html_msg)
+                    
                     send_alert_mail(request=request, email_subject="Payment Window Has Been Closed", user_email=request.user.email,
                                     email_message=f"A Payment Window Has Been Closed, You will recevive your ${price} worth of bitcoin in your bitcoin address you added in your profile", email_image="payment-window-closed.png")
                     send_alert_mail(request=request, email_subject=f"${price} Has Been Debited", user_email=request.user.email,
-                                    email_message=f"You just withdraw ${price} and its will take upto 48 hours before you receive it. If you have any problem contact creypinvest@gmail.com or click on our support button", email_image="user-payed.png")
+                                    email_message=f"You just withdraw ${price} and its will take upto 48 hours before you receive it. If you have any problem contact creypinvest@gmail.com or please click on our support button on the site", email_image="user-payed.png")
                 except:
                     pass
         else:
