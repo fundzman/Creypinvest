@@ -133,11 +133,11 @@ Author: Creyp Invest Inc.
     if (window.pageYOffset > sticky) {
       header_navbar.classList.add("sticky");
       logo.src =
-        "https://dp2qyyzsg7qig.cloudfront.net/static/images/logo/logo.svg";
+        "https://creyp-assets.s3.eu-west-2.amazonaws.com/static/images/logo/logo.svg";
     } else {
       header_navbar.classList.remove("sticky");
       logo.src =
-        "https://dp2qyyzsg7qig.cloudfront.net/static/images/logo/white-logo.svg";
+        "https://creyp-assets.s3.eu-west-2.amazonaws.com/static/images/logo/white-logo.svg";
     }
 
     // show or hide the back-top-top button
