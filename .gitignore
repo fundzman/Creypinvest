@@ -86,7 +86,6 @@ __pypackages__/
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -118,3 +117,4 @@ cython_debug/
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+.gitignore

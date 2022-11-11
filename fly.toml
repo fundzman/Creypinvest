@@ -1,0 +1,53 @@
+# fly.toml file generated for trayfoods on 2022-10-15T10:31:11+01:00
+
+app = "creypinvest"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[deploy]
+  release_command = "python manage.py migrate"
+
+[env]
+  AWS_DEFAULT_ACL = "None"
+  AWS_STORAGE_BUCKET_NAME = "creyp-assets"
+  DEBUG = "False"
+  DISABLE_COLLECTSTATIC = "1"
+  EMAIL_HOST_USER = "noreply.creypinvest@gmail.com"
+  PORT = "8000"
+  USE_DB = "True"
+  USE_S3 = "True"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/static/"
