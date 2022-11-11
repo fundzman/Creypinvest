@@ -19,7 +19,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 USE_S3 = config('USE_S3', cast=bool)
 
-ALLOWED_HOSTS = ['localhost', 'creypinvest.fly.dev']
+ALLOWED_HOSTS = ['*']
 LOGIN_URL = "/auth/account/login"
 LOGIN_REDIRECT_URL = '/dashboard'
 
