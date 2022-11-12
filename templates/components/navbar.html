@@ -59,7 +59,9 @@
             </div>
             {% if user.is_authenticated %}
             <div class="button">
-              <a href="{% url 'dashboard-profile' %}" class="btn">Profile</a>
+              <a href="{% url 'account_logout' %}" class="btn">
+                <i class="me-3 fa fa-sign-out-alt" aria-hidden="true"></i>
+                Logout</a>
             </div>
             {% else %}
             <div class="button">
