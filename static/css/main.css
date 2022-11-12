@@ -1088,19 +1088,16 @@ ol {
     padding: 0px 20px;
     margin-bottom: 50px;
   }
-
   .section-title h3 {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 12px;
   }
-
   .section-title h2 {
     font-size: 24px;
     line-height: 32px;
     margin-bottom: 20px;
   }
-
   .section-title p {
     font-size: 15px;
   }
@@ -1110,19 +1107,16 @@ ol {
     padding: 0px 10px;
     margin-bottom: 40px;
   }
-
   .section-title h3 {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 12px;
   }
-
   .section-title h2 {
     font-size: 24px;
     line-height: 30px;
     margin-bottom: 18px;
   }
-
   .section-title p {
     font-size: 15px;
   }
@@ -1433,17 +1427,14 @@ ol {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .header {
-    padding: 18px 0 !important;
+    padding: 9px 0 !important;
   }
-
   .header .mobile-menu-btn .toggler-icon {
     background-color: #fff;
   }
-
   .header .button {
     margin: 0 !important;
   }
-
   .header .navbar-collapse {
     position: absolute;
     top: 67px !important;
@@ -1454,35 +1445,27 @@ ol {
     box-shadow: 0px 15px 20px 0px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     max-height: 350px;
-    overflow-y: scroll;
+    overflow-y: auto;
     border-top: 1px solid #eee;
-    border-radius: 8px;
   }
-
   .header .navbar .navbar-nav .nav-item a:hover {
     color: #3E80FF !important;
   }
-
   .header .navbar .navbar-nav .nav-item a.active {
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item {
     margin: 0;
   }
-
   .header .navbar-nav .nav-item:hover a {
     color: #3E80FF;
   }
-
   .header .navbar-nav .nav-item a {
     padding: 12px 16px !important;
   }
-
   .header .navbar-nav .nav-item a::before {
     display: none;
   }
-
   .header .navbar-nav .nav-item .sub-menu {
     position: static;
     width: 100%;
@@ -1494,49 +1477,39 @@ ol {
     margin-left: 15px;
     margin-right: 15px;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item a {
     padding: 12px 12px;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item a:hover {
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item a {
     color: #051441;
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
   }
-
   .header .navbar-nav .nav-item a::after {
     opacity: 1;
     visibility: visible;
   }
-
   .header .navbar-nav .nav-item .sub-menu li.active {
     background: #fff !important;
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item {
     margin: 0 !important;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item a {
     padding: 10px 12px !important;
   }
-
   .header .navbar-nav .nav-item .sub-menu li:hover {
     background: #fff !important;
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item a {
     font-size: 14px;
   }
-
   .header .navbar-nav .nav-item a:hover {
     color: #3E80FF;
   }
@@ -1545,11 +1518,9 @@ ol {
   .header {
     padding: 18px 0 !important;
   }
-
   .header .mobile-menu-btn .toggler-icon {
     background-color: #fff;
   }
-
   .header .navbar-collapse {
     position: absolute;
     top: 62px !important;
@@ -1560,35 +1531,27 @@ ol {
     box-shadow: 0px 15px 20px 0px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     max-height: 350px;
-    overflow-y: scroll;
+    overflow-y: auto;
     border-top: 1px solid #eee;
-    border-radius: 8px;
   }
-
   .header .navbar .navbar-nav .nav-item a:hover {
     color: #3E80FF !important;
   }
-
   .header .navbar .navbar-nav .nav-item a.active {
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item {
     margin: 0;
   }
-
   .header .navbar-nav .nav-item:hover a {
     color: #3E80FF;
   }
-
   .header .navbar-nav .nav-item a {
     padding: 12px 16px !important;
   }
-
   .header .navbar-nav .nav-item a::before {
     display: none;
   }
-
   .header .navbar-nav .nav-item .sub-menu {
     position: static;
     width: 100%;
@@ -1600,49 +1563,39 @@ ol {
     margin-left: 15px;
     margin-right: 15px;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item a {
     padding: 12px 12px;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item a:hover {
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item a {
     color: #051441;
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
   }
-
   .header .navbar-nav .nav-item a::after {
     opacity: 1;
     visibility: visible;
   }
-
   .header .navbar-nav .nav-item .sub-menu li.active {
     background: #fff !important;
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item {
     margin: 0 !important;
   }
-
   .header .navbar-nav .nav-item .sub-menu .nav-item a {
     padding: 10px 12px !important;
   }
-
   .header .navbar-nav .nav-item .sub-menu li:hover {
     background: #fff !important;
     color: #3E80FF !important;
   }
-
   .header .navbar-nav .nav-item a {
     font-size: 14px;
   }
-
   .header .navbar-nav .nav-item a:hover {
     color: #3E80FF;
   }
@@ -1978,16 +1931,13 @@ ol {
   .header .button .signin {
     color: #24126A;
   }
-
   .header .button .signin:hover {
     color: #3E80FF;
   }
-
   .header .button .signup {
     background-color: #3E80FF;
     color: #fff;
   }
-
   .header .button .signup:hover {
     background-color: #3E80FF;
     color: #fff;
@@ -2106,13 +2056,11 @@ ol {
   .hero-area .hero-content {
     text-align: center;
   }
-
   .hero-area .hero-content h1 {
     font-size: 30px;
     font-weight: 700;
     line-height: 38px;
   }
-
   .hero-area .hero-content p {
     font-size: 15px;
   }
@@ -2122,24 +2070,20 @@ ol {
     padding: 0 10px;
     text-align: center;
   }
-
   .hero-area .hero-content h1 {
     font-size: 24px;
     line-height: 32px;
   }
-
   .hero-area .hero-content p {
     margin-top: 15px;
     font-size: 15px;
     line-height: 26px;
   }
-
   .hero-area .hero-content .button .btn {
     width: 60%;
     margin: 0;
     margin-bottom: 7px;
   }
-
   .hero-area .hero-content .button .btn:last-child {
     margin: 0;
   }
@@ -2638,7 +2582,6 @@ ol {
     padding: 0 30px;
     margin-bottom: 100px;
   }
-
   .intro-video-area .section-title h2 {
     font-size: 20px;
   }
@@ -4288,11 +4231,9 @@ blockquote span {
     display: block;
     margin-top: 30px;
   }
-
   .account-login .button .btn {
     margin-bottom: 13px;
   }
-
   .account-login .button .btn:last-child {
     margin: 0;
   }

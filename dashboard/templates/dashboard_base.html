@@ -275,8 +275,7 @@
       <!-- Page wrapper  -->
       <!-- ============================================================== -->
       <div class="page-wrapper">
-        {% if crumbs %} {% include 'dashboard_breadcrumbs.html' with title=title
-        crumbs=crumbs %} {% endif %}
+        {% if crumbs %} {% include 'dashboard_breadcrumbs.html' with title=title crumbs=crumbs %} {% endif %}
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container">{% block content %} {% endblock content %}</div>

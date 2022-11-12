@@ -1133,11 +1133,9 @@ Deposit
   .mb-sm {
     display: block;
   }
-
   #graphBitcoin {
     display: none;
   }
-
   .btc-val {
     max-width: 70vw;
     height: 100%;

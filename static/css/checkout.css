@@ -177,16 +177,13 @@ form .btn.btn-primary:hover {
     padding: 10px;
     width: 100%;
   }
-
   .text-green {
     font-size: 14px;
   }
-
   .card.box1,
 .card.box2 {
     width: 100%;
   }
-
   .nav.nav-tabs .nav-item .nav-link {
     font-size: 12px;
   }
