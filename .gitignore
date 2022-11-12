@@ -85,6 +85,8 @@ __pypackages__/
 # SageMath parsed files
 *.sage.py
 
+db.sqlite3
+
 # Environments
 .venv
 .env
