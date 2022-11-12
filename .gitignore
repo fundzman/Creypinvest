@@ -87,6 +87,8 @@ __pypackages__/
 
 db.sqlite3
 
+zdb/
+
 # Environments
 .venv
 .env
