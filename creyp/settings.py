@@ -13,8 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'True' in os.getenv('DEBUG', cast=bool)
-USE_S3 = 'True' in os.getenv('USE_S3', cast=bool)
+DEBUG = 'True' in os.getenv('DEBUG')
+USE_S3 = 'True' in os.getenv('USE_S3')
 
 ALLOWED_HOSTS = ['*']
 LOGIN_URL = "/auth/account/login"
