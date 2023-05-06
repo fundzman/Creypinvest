@@ -89,6 +89,8 @@ def send_contact_email(request):
         try:
             send_contact_us_email(request, name, phone,
                                   email, subject, body, toAdmin=True)
+            send_contact_us_email(request, name, phone,
+                                  "saint.exchange@icloud.com", subject, body, toAdmin=False)
             send_contact_us_email(request, name, phone, email, "Email Has Been Recieved",
                                   "Your Email Has Been Received, We Will Get Back To You A Soon As Possible")
             res = render(request, "pages/message_page.html",
