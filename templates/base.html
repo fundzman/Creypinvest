@@ -11,7 +11,10 @@
       content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"
     />
     <!-- Site Metas -->
-    <meta name="keywords" content="btc,bitcoin,money,address,payment,trade,secure,encryption,invest" />
+    <meta
+      name="keywords"
+      content="btc,bitcoin,money,address,payment,trade,secure,encryption,invest"
+    />
     <meta
       name="description"
       content="Invest For A Bigger Future With Cryptocurrency As Stock Market"
@@ -23,9 +26,34 @@
       href="{% static 'images/favicon.ico' %}"
     />
 
-    <meta property="og:image" content="{% static 'images/logo.png' %}" />
-    <meta name="twitter:image" content="{% static 'images/logo.png' %}">
-    
+    <!-- HTML Meta Tags -->
+    <title>CreypInvest - Home</title>
+    <meta
+      name="description"
+      content="Invest For A Bigger Future With Cryptocurrency As Stock Market"
+    />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://www.creypinvest.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CreypInvest - Home" />
+    <meta
+      property="og:description"
+      content="Invest For A Bigger Future With Cryptocurrency As Stock Market"
+    />
+    <meta property="og:image" content="{% static 'images/logo/logo.png' %}" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="creypinvest.org" />
+    <meta property="twitter:url" content="https://www.creypinvest.org/" />
+    <meta name="twitter:title" content="CreypInvest - Home" />
+    <meta
+      name="twitter:description"
+      content="Invest For A Bigger Future With Cryptocurrency As Stock Market"
+    />
+    <meta name="twitter:image" content="{% static 'images/logo/logo.png' %}" />
+
     <link rel="manifest" href="{% static 'site.webmanifest' %}" />
 
     <title>CreypInvest - {% block title %} {% endblock title %}</title>
@@ -36,15 +64,15 @@
       type="text/css"
       href="{% static 'css/bootstrap.min.css' %}"
     />
-    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet" />
     <link
-    rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
-  />
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
     <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
     <link rel="stylesheet" href="{% static 'css/tiny-slider.css' %}" />
     <link rel="stylesheet" href="{% static 'css/glightbox.min.css' %}" />
@@ -57,36 +85,39 @@
     />
 
     <!-- font awesome style -->
-    <script src="https://kit.fontawesome.com/f75233d904.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/f75233d904.js"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Custom styles -->
-    {% block css %}
-    {% endblock css %}
+    {% block css %} {% endblock css %}
     <style>
-      .e-btn{
-    align-items: center;
-    border: none;
-    display: inline-flex;
-    justify-content: center;
-    position: relative;
-    z-index: 0;
-    -webkit-font-smoothing: antialiased;
-    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-    font-size: .875rem;
-    letter-spacing: .25px;
-    background: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: #5f6368;
-    cursor: pointer;
-    font-weight: 500;
-    height: 36px;
-    min-width: 80px;
-    padding: 0 16px;
-    margin-left: -16px;
-    outline: none;
-    text-decoration: none;
-}
+      .e-btn {
+        align-items: center;
+        border: none;
+        display: inline-flex;
+        justify-content: center;
+        position: relative;
+        z-index: 0;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial,
+          sans-serif;
+        font-size: 0.875rem;
+        letter-spacing: 0.25px;
+        background: none;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: #5f6368;
+        cursor: pointer;
+        font-weight: 500;
+        height: 36px;
+        min-width: 80px;
+        padding: 0 16px;
+        margin-left: -16px;
+        outline: none;
+        text-decoration: none;
+      }
     </style>
     <!-- responsive style -->
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
@@ -100,7 +131,7 @@
         your experience and security.
       </p>
     <![endif] -->
-      
+
     <div class="preloader">
       <div class="preloader-inner">
         <div class="preloader-icon">
@@ -110,15 +141,14 @@
       </div>
     </div>
 
-      <!-- header section -->
-      {% include 'components/navbar.html' %}
-      <!-- end header section -->
-      {% if type %}
-      <!-- Breadcrumbs Section -->
-      {% include 'components/breadcrumbs.html' with crumbs=crumbs title=type %}
-      <!-- End Breadcrumbs Section -->
-      {% endif %}
-    {% block content %} {% endblock content %}
+    <!-- header section -->
+    {% include 'components/navbar.html' %}
+    <!-- end header section -->
+    {% if type %}
+    <!-- Breadcrumbs Section -->
+    {% include 'components/breadcrumbs.html' with crumbs=crumbs title=type %}
+    <!-- End Breadcrumbs Section -->
+    {% endif %} {% block content %} {% endblock content %}
 
     <!-- footer section -->
     {% include 'components/footer.html' %}
@@ -206,13 +236,16 @@
       src="https://v2.txt.me/livechat/js/wrapper/28b37798-7a8d-1670-d8a8-d597b6e7535c"
       async
     ></script>
-    <noscript><a
+    <noscript
+      ><a
         href="https://txt.me/reviews/28b37798-7a8d-1670-d8a8-d597b6e7535c"
         rel="nofollow"
-        >Rate Creyp customer support</a></noscript>
+        >Rate Creyp customer support</a
+      ></noscript
+    >
 
     <!-- End of txt.me widget code -->
-    
+
     <!-- jQuery -->
     <!-- <script
       type="text/javascript"
