@@ -16,6 +16,7 @@
               <p class="h1 fw-bold d-flex" id="bitcoin-toggle" data-{{request.user.username}}-balance="{{bal}}">
                 <span
                   class="fas fa-dollar-sign textmuted pe-1 h6 align-text-top mt-1"
+                  style="user-select: none;"
                 ></span
                 >{{first_bal}} <span class="textmuted">.{{second_bal}}</span>
               </p>
@@ -130,13 +131,13 @@
             <p class="fw-bold">Activities</p>
           </div>
           <ol class="activity-feed activity-container" style="{% if transactions.count > 4 %}height: 330px;{% endif %}">
-            {% for transaction in transactions %}
-            <li class="feed-item {% if transaction.status == 'credit' %}credit{% elif transaction.status == 'failed' %}failed{% endif %}">
-              <time class="date" datetime="{{transaction.timestamp|date:'m'}}-{{transaction.timestamp|date:'d'}}">{{transaction.timestamp|date:"F"}} {{transaction.timestamp|date:"d"}} - 
-                {{transaction.timestamp|date:"g"}}:{{transaction.timestamp|date:"i"}}{{transaction.timestamp|date:"A"}}</time>
-              <span class="text">{{transaction.msg}}</a></span>
-            </li>
-            {% endfor %}
+             {% for transaction in transactions %}
+                <{% if transaction.status == "processing" and transactions.first == transaction %}a href="/auth/withdraw/auth/start-window/" style="cursor:pointer;" {% else %}li{% endif %} data-status="{{transaction.status}}" class="feed-item {% if transaction.status == 'credit' %}credit{% elif transaction.status == 'failed' %}failed{% elif transaction.status == 'pending' %}d-nonev{% endif %}">
+                <time class="date" datetime="{{transaction.timestamp|date:'m'}}-{{transaction.timestamp|date:'d'}}">{{transaction.timestamp|date:"F"}} {{transaction.timestamp|date:"d"}} - 
+                  {{transaction.timestamp|date:"g"}}:{{transaction.timestamp|date:"i"}}{{transaction.timestamp|date:"A"}}</time>
+                  <span class="text">{{transaction.msg}}</a></span>
+                    </{% if transaction.status == "processing" and transactions.first == transaction %}a{% else %}li{% endif %}>
+                {% endfor %}
           </ol>
       </div>
     </div>

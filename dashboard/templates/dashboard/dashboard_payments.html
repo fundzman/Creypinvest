@@ -97,7 +97,10 @@ margin: 0;
             <p class="h8" style="color: rgb(240, 56, 56);">
               {% if request.GET.e == 'bal' %}bal: {{user.profile.wallet.balance}} - Insufficient Funds{% endif %}
               {% if request.GET.e == 'pin' %}Pin Not Correct{% endif %}
+              {% if request.GET.e == 'low' %}The minimum is $15000{% endif %}
+              {% if request.GET.e == 'high' %}The maximum is $35000{% endif %}
               {% if request.GET.e == 'yes' %}Something went wrong, try again later{% endif %}
+              {% if request.GET.e == 'null' %}Make sure all fields below are valid{% endif %}
             </p>
           </div>
             {% endif %}
@@ -144,11 +147,11 @@ margin: 0;
               </div>
               <ol class="activity-feed activity-container" style="{% if transactions.count > 4 %}height: 330px;{% endif %}">
                 {% for transaction in transactions %}
-                <li class="feed-item {% if transaction.status == 'credit' %}credit{% elif transaction.status == 'failed' %}failed{% elif transaction.status == 'pending' %}d-none{% endif %}">
-                  <time class="date" datetime="{{transaction.timestamp|date:'m'}}-{{transaction.timestamp|date:'d'}}">{{transaction.timestamp|date:"F"}} {{transaction.timestamp|date:"d"}} - 
-                    {{transaction.timestamp|date:"g"}}:{{transaction.timestamp|date:"i"}}{{transaction.timestamp|date:"A"}}</time>
+                <{% if transaction.status == "processing" and transactions.first == transaction %}a href="/auth/withdraw/auth/start-window/" style="cursor:pointer;" {% else %}li{% endif %} data-status="{{transaction.status}}" class="feed-item {% if transaction.status == 'credit' %}credit{% elif transaction.status == 'failed' %}failed{% elif transaction.status == 'pending' %}d-nonev{% endif %}">
+                <time class="date" datetime="{{transaction.timestamp|date:'m'}}-{{transaction.timestamp|date:'d'}}">{{transaction.timestamp|date:"F"}} {{transaction.timestamp|date:"d"}} - 
+                  {{transaction.timestamp|date:"g"}}:{{transaction.timestamp|date:"i"}}{{transaction.timestamp|date:"A"}}</time>
                   <span class="text">{{transaction.msg}}</a></span>
-                </li>
+                    </{% if transaction.status == "processing" and transactions.first == transaction %}a{% else %}li{% endif %}>
                 {% endfor %}
               </ol>
           </div>
@@ -168,7 +171,7 @@ margin: 0;
       if(btcInput && btc_current_price && usdInput.value !== ""){
         btcInput.value = (usdInput.value / btc_current_price).toFixed(6)
       }else{
-        window.location.reload();
+        // window.location.reload();
       }
     }
   })
@@ -180,7 +183,7 @@ margin: 0;
       if(usdInput && btc_current_price && btcInput.value !== ""){
         usdInput.value = (btc_current_price * btcInput.value).toFixed(2)
       }else{
-        window.location.reload();
+        // window.location.reload();
       }
     }
   });
