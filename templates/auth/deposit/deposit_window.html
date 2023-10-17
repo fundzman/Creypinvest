@@ -21,9 +21,9 @@
           <input type="text" readonly="readonly" placeholder="Copy Bitcoin address" id="btc" value="{{btc_address}}" disabled="true" onclick="copyToClipboard('#generated-address')"/>
           <p id="generated-address" style="display:none;">{{btc_address}}</p>
           <i class="las la-copy copy-generated-address" onclick="copyToClipboard('#generated-address')"></i>
-          <img src="https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address=bc1q6a2w5npa5za5zy5xexf9n34sfuxqtnc0l29566" height="300" width="300" border="0" alt="Bitcoin QR code" style="
+          <img src="https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address={{btc_address}}" height="300" width="300" border="0" alt="Bitcoin QR code" style="
     margin: auto;
-" title="bitcoin:bc1q6a2w5npa5za5zy5xexf9n34sfuxqtnc0l29566">
+" title="bitcoin:{{btc_address}}">
         </div>
       </div>
       <div class="control-group amount-fields">
