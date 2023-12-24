@@ -12,6 +12,7 @@ from django_countries.fields import CountryField
 
 STATUS = (
     ("pending", "pending"),
+    ("hidden", "hidden"),
     ("credit", "credit"),
     ("processing", "processing"),
     ("confirming", "confirming"),
