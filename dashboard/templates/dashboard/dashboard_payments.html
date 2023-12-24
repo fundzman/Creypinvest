@@ -17,7 +17,9 @@ margin: 0;
         <div class="col-12 mb-4">
           <div class="row box-right" onclick="toggleAmount()">
             <div class="col-md-8 ps-0">
-              <p class="ps-3 textmuted fw-bold h6 mb-0">BALANCE</p>
+              <p class="ps-3 textmuted fw-bold h6 mb-0">
+                AVAILABLE BALANCE
+              </p>
               <p
                 class="h1 fw-bold d-flex"
                 id="bitcoin-toggle"
@@ -90,15 +92,15 @@ margin: 0;
               </p>
             </div>
             <div class="d-flex mb-2">
-              <p class="h7">Min. $1,500 - Max. $35,000</p>
+              <p class="h7">Min. $2,000 - Max. $100,000</p>
             </div>
             {% if request.GET.e %}
             <div class="d-flex mb-2 mt-2">
             <p class="h8" style="color: rgb(240, 56, 56);">
               {% if request.GET.e == 'bal' %}bal: {{user.profile.wallet.balance}} - Insufficient Funds{% endif %}
               {% if request.GET.e == 'pin' %}Pin Not Correct{% endif %}
-              {% if request.GET.e == 'low' %}The minimum is $15000{% endif %}
-              {% if request.GET.e == 'high' %}The maximum is $35000{% endif %}
+              {% if request.GET.e == 'low' %}The minimum is $2,000{% endif %}
+              {% if request.GET.e == 'high' %}The maximum is $100,000{% endif %}
               {% if request.GET.e == 'yes' %}Something went wrong, try again later{% endif %}
               {% if request.GET.e == 'null' %}Make sure all fields below are valid{% endif %}
             </p>
@@ -117,7 +119,7 @@ margin: 0;
               <div class="col-6">
                 <p class="textmuted h8">USD</p>
                 <div class="d-flex form-control"> <span class="fas fa-dollar-sign textmuted mt-1 fw-bold font-bold"></span> 
-                <input class="w-100 border-0 textmuted fw-bold font-bold" min="1500" max="35000" id="usd_input" name="price" type="number" placeholder="00.00" required="true"/>
+                <input class="w-100 border-0 textmuted fw-bold font-bold" min="2000" max="100000" id="usd_input" name="price" type="number" placeholder="00.00" required="true"/>
               </div>
               </div>
               <div class="col-6">
@@ -139,7 +141,7 @@ margin: 0;
     </div>
     <div class="col-md-5 col-12 ps-md-2 p-0">
         <div class="box-left d-none">
-          <!-- <h1>u are secured and safe!</h1> -->
+          <!-- <h1>u nor get sense</h1> -->
         </div>
         <div class="box-left">
             <div class="d-flex mb-2">
