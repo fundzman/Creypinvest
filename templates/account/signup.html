@@ -37,16 +37,6 @@
               <h3>{% trans 'Sign Up Now' %}</h3>
               <p>{% trans 'Use the form below to create your new account.' %}</p>
             </div>
-            <!-- <div class="alt-option">
-              <span class="small-title">{% trans 'Sign up with your work email' %}</span>
-              <a href="{% provider_login_url 'google' %}" class="option-button"
-                ><img
-                  src="{% static 'images/account-login/google.png' %}"
-                  alt="#"
-                />{% trans 'Sign Up With Google' %}
-              </a>
-            </div> -->
-            <!-- <div class="or"><span>Or</span></div> -->
             <div class="form-errors px-3">
               {% for field in form %}
               <div class="form-error">
