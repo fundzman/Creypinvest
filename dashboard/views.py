@@ -16,9 +16,9 @@ def dashboard_home_view(request):
         bal = qs.balance.split(".")
         first_bal = bal[0]
         second_bal = bal[1]
-        transactions = Transaction.objects.filter(wallet=request.user.profile.wallet, status="credit")
+        transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
         amount_invested = 0
-        for transaction in transactions:
+        for transaction in transactions.filter(status="credit"):
             amount_invested += int(transaction.amount)
         admin_wallet = AdminWallet.objects.all().first()
         returns = admin_wallet.returns
