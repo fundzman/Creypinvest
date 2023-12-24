@@ -16,8 +16,10 @@ def dashboard_home_view(request):
         bal = qs.balance.split(".")
         first_bal = bal[0]
         second_bal = bal[1]
-        transactions = Transaction.objects.filter(
-            wallet=request.user.profile.wallet)
+        transactions = Transaction.objects.filter(wallet=request.user.profile.wallet, status="credit")
+        amount_invested = 0
+        for transaction in transactions:
+            amount_invested += int(transaction.amount)
         admin_wallet = AdminWallet.objects.all().first()
         returns = admin_wallet.returns
         bad = admin_wallet.bad
@@ -26,11 +28,12 @@ def dashboard_home_view(request):
             "crumbs": ["Dashboard"],
             "bal": qs.balance,
             "first_bal": first_bal,
+            "amount_invested": amount_invested,
             "second_bal": second_bal,
             "crumbs_count": 1,
             "transactions": transactions,
             "returns": returns,
-            "bad": bad
+            "bad": bad,
         }
         return render(request, "dashboard/dashboard_home.html", context)
     else:
@@ -46,7 +49,7 @@ def dashboard_profile_view(request):
             "title": "Profile",
             "crumbs": ["Profile"],
             "crumbs_count": 2,
-            "countries": countries
+            "countries": countries,
         }
         return render(request, "dashboard/dashboard_profile.html", context)
     else:
@@ -58,8 +61,8 @@ def dashboard_profile_auth_view(request):
     if request.method == "POST":
         form = request.POST
         profile_image = form.get("profile_image")
-        if 'profile_image' in request.FILES:
-            profile_image = request.FILES['profile_image']
+        if "profile_image" in request.FILES:
+            profile_image = request.FILES["profile_image"]
         full_name = form.get("full_name").strip()
         full_name_list = full_name.split(" ")
         full_name = []
@@ -107,7 +110,9 @@ def dashboard_profile_auth_view(request):
         user_.save()
         user_profile.save()
 
-        return redirect("/dashboard/profile/?success=yes&msg=your+profile+has+been+updated")
+        return redirect(
+            "/dashboard/profile/?success=yes&msg=your+profile+has+been+updated"
+        )
     return redirect("dashboard-profile")
 
 
@@ -121,8 +126,7 @@ def dashboard_payments_view(request):
         bal = qs.balance.split(".")
         first_bal = bal[0]
         second_bal = bal[1]
-        transactions = Transaction.objects.filter(
-            wallet=request.user.profile.wallet)
+        transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
         admin_wallet = AdminWallet.objects.all().first()
         returns = admin_wallet.returns
         bad = admin_wallet.bad
@@ -135,7 +139,7 @@ def dashboard_payments_view(request):
             "crumbs_count": 2,
             "transactions": transactions,
             "returns": returns,
-            "bad": bad
+            "bad": bad,
         }
         return render(request, "dashboard/dashboard_payments.html", context)
     else:
@@ -154,7 +158,7 @@ def dashboard_referral_view(request):
             "title": "Referral",
             "crumbs": ["Referral"],
             "crumbs_count": 2,
-            "refers": refers
+            "refers": refers,
         }
         return render(request, "dashboard/dashboard_referral.html", context)
     else:

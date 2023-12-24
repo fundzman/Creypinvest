@@ -33,7 +33,7 @@ $(function () {
   $(window).on("resize", setsidebartype);
 });
 window.onload = function () {
-  if (bitcoin_toggler) {
+  if (bitcoin_togglers && bitcoin_togglers.length > 0) {
     // BTC CURRENT PRICE
     var bitcoinPrice = new XMLHttpRequest();
     bitcoinPrice.onreadystatechange = function () {
@@ -51,5 +51,5 @@ window.onload = function () {
 };
 
 function toggleNavDropDown() {
-    document.getElementById("dropdownMenu").classList.toggle("show");
-  };
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}

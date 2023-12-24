@@ -9,8 +9,10 @@
   <div class="row m-0">
     <div class="col-md-7 col-12">
       <div class="row">
-        <div class="col-12 mb-4">
-          <div class="row box-right" onclick="toggleAmount()">
+        <div class="flex-column d-flex mb-4 gap-2 ">
+          <div class="row box-right" onclick="toggleAmount(
+            event
+          )">
             <div class="col-md-8 ps-0">
               <p class="ps-3 textmuted fw-bold h6 mb-0">BALANCE</p>
               <p class="h1 fw-bold d-flex" id="bitcoin-toggle" data-{{request.user.username}}-balance="{{bal}}">
@@ -25,6 +27,92 @@
                 <span class="lab la-bitcoin textmuted pe-1 h6 align-text-top mt-1"></span>
                 <span class="bitcoin-amount" id="bitcoin-div" data-{{request.user.username}}-balance="{{bal}}">
                 <span class="bitcoin_first">{{first_bal}}</span><span class="bitcoin_last sm textmuted">.{{second_bal}}</span>
+                </span>
+                </p>
+              {% if returns %}
+              <p class="ms-3 px-2 bg-green">{{returns}}</p>
+              {% endif %}
+              {% if bad and returns == '' %}
+              <p class="ms-3 px-2 bg-red">{{bad}}</p>
+              {% endif %}
+            </div>
+            <div class="col-md-4">
+                {% if pending %}
+              <p class="p-blue">
+                <span class="fas fa-circle pe-2"></span>Pending
+              </p>
+              <p class="fw-bold mb-3">
+                  <span class="fas fa-dollar-sign pe-1"></span>00
+                  <span class="textmuted">.00</span>
+                </p>
+                {% endif %}
+                {% if drafts %}
+              <p class="p-org">
+                <span class="fas fa-circle pe-2"></span>On drafts
+              </p>
+              <p class="fw-bold">
+                <span class="fas fa-dollar-sign pe-1"></span>00<span
+                  class="textmuted"
+                  >.00</span
+                >
+              </p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row box-right" onclick="toggleAmount(
+            event
+          )">
+            <div class="col-md-8 ps-0">
+              <p class="ps-3 textmuted fw-bold h6 mb-0">
+                BITCOIN EQUIVALENT
+              </p>
+              
+              <!-- In Bitcoin -->
+              <p class="h1 fw-bold d-flex" id="bitcoin-toggle" data-{{request.user.username}}-balance="{{bal}}">
+                <span class="lab la-bitcoin textmuted pe-1 h6 align-text-top mt-1"></span>
+                <span class="bitcoin-amount" id="bitcoin-div" data-{{request.user.username}}-balance="{{bal}}">
+                <span class="bitcoin_first">converting</span><span class="bitcoin_last sm textmuted">...</span>
+                </span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                {% if pending %}
+              <p class="p-blue">
+                <span class="fas fa-circle pe-2"></span>Pending
+              </p>
+              <p class="fw-bold mb-3">
+                  <span class="fas fa-dollar-sign pe-1"></span>00
+                  <span class="textmuted">.00</span>
+                </p>
+                {% endif %}
+                {% if drafts %}
+              <p class="p-org">
+                <span class="fas fa-circle pe-2"></span>On drafts
+              </p>
+              <p class="fw-bold">
+                <span class="fas fa-dollar-sign pe-1"></span>00<span
+                  class="textmuted"
+                  >.00</span
+                >
+              </p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row box-right" onclick="toggleAmount(event)">
+            <div class="col-md-8 ps-0">
+              <p class="ps-3 textmuted fw-bold h6 mb-0">INVESTED</p>
+              <p class="h1 fw-bold d-flex" id="bitcoin-toggle" data-{{request.user.username}}-balance="{{bal}}">
+                <span
+                  class="fas fa-dollar-sign textmuted pe-1 h6 align-text-top mt-1"
+                  style="user-select: none;"
+                ></span
+                >{{amount_invested}} <span class="textmuted">.0</span>
+              </p>
+              <!-- In Bitcoin -->
+              <p class="h1 fw-bold d-flex d-none" id="bitcoin-toggle" data-{{request.user.username}}-balance="{{amount_invested}}">
+                <span class="lab la-bitcoin textmuted pe-1 h6 align-text-top mt-1"></span>
+                <span class="bitcoin-amount" id="bitcoin-div" data-{{request.user.username}}-balance="{{amount_invested}}">
+                <span class="bitcoin_first">{{amount_invested}}</span><span class="bitcoin_last sm textmuted">.0</span>
                 </span>
                 </p>
               {% if returns %}

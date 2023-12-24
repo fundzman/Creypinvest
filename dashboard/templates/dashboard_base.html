@@ -324,25 +324,18 @@
         "profile-pic",
         "{{ user.socialaccount_set.all.0.get_avatar_url }}"
       );
-      var bitcoin_toggler = document.querySelectorAll("#bitcoin-toggle");
+      var bitcoin_togglers = document.querySelectorAll("#bitcoin-toggle");
       var bitcoin_div = document.querySelectorAll("#bitcoin-div");
-      //   var user_balance = bitcoin_toggler.getAttribute("data-{{request.user.username}}-balance");
-      //   user_balance = parseFloat(user_balance);
-      function toggleAmount() {
-        bitcoin_toggler[0].classList.toggle("d-none");
-        bitcoin_toggler[1].classList.toggle("d-none");
-      }
-      bitcoin_toggler.addEventListener("click", toggleAmount);
+      const userBal = parseFloat("{{bal}}");
       function btcConverter(bitcoin) {
-        if (bitcoin_toggler && bitcoin_div) {
+        console.log(bitcoin);
+        if (bitcoin_togglers && bitcoin_div) {
           for (var key in bitcoin_div) {
-            var dollars = bitcoin_div[key].getAttribute(
-              "data-{{request.user.username}}-balance"
-            );
-            localStorage.setItem("{{request.user.username}}-balance", dollars);
-            dollarsCheck = parseFloat(dollars);
+            console.log("user_bal", userBal)
+            localStorage.setItem("{{request.user.username}}-balance", userBal);
+            dollarsCheck = parseFloat(userBal);
             if (dollarsCheck > 0) {
-              var bitcoinAmount = (dollars / bitcoin + 0.0005).toFixed(6);
+              var bitcoinAmount = (userBal / bitcoin + 0.0005).toFixed(6);
               var newBal = bitcoinAmount.split(".");
               var content = `<span class="bitcoin_first">${newBal[0]}</span><span class="bitcoin_last sm textmuted">.${newBal[1]}</span>`;
               bitcoin_div[key].innerHTML = `${content}`;
@@ -350,6 +343,9 @@
           }
         }
       }
+    </script>
+
+    <script>
       // COPY TO CLIPBOARD
       function copyToClipboard(text) {
         const elem = document.createElement("textarea");
