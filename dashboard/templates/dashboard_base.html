@@ -328,10 +328,8 @@
       var bitcoin_div = document.querySelectorAll("#bitcoin-div");
       const userBal = parseFloat("{{bal}}");
       function btcConverter(bitcoin) {
-        console.log(bitcoin);
         if (bitcoin_togglers && bitcoin_div) {
           for (var key in bitcoin_div) {
-            console.log("user_bal", userBal)
             localStorage.setItem("{{request.user.username}}-balance", userBal);
             dollarsCheck = parseFloat(userBal);
             if (dollarsCheck > 0) {
