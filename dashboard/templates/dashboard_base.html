@@ -294,7 +294,7 @@
         <!-- ============================================================== -->
       </div>
       {% if user %}
-      <script>
+      <script async>
         if (jivo_api)
           jivo_api.setContactInfo({
             name: "{{user.first_name}} {{user.last_name}}",

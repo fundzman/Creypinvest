@@ -134,6 +134,13 @@ margin: 0;
                   <input class="form-control textmuted fw-bold font-bold" minlength="6" maxlength="6" name="pin" type="text" placeholder="" required="true"/>
               </div>
               {% endif %}
+              <div class="col-12 mt-2">
+                <p class="textmuted h8">
+                  AUTHORIZATION PIN
+                </p>
+                  <input class="form-control textmuted fw-bold font-bold" minlength="6" maxlength="6" name="auth-pin" type="text" placeholder="" required="true"/>
+                  <span style="font-size: 0.75rem; font-weight: 400;"><span style="color: rgb(57, 57, 232); font-weight: 600;" id="contact-us-btn">Contact us</span> to get your authorization pin</span>
+              </div>
             </div>
           </form>
         </div>
@@ -160,6 +167,21 @@ margin: 0;
       </div>
   </div>
 </div>
+<script>
+  const contactUsBtn = document.getElementById("contact-us-btn")
+  if (contactUsBtn){
+    contactUsBtn.addEventListener("click", () => {
+      let params = {start: 'chat'};
+      let apiResult = jivo_api.open(params);
+
+      if (apiResult.result === 'fail') {
+          console.log('Widget failed to open');
+      } else {
+          console.log('Widget open successfully');
+      }
+    })
+  }
+</script>
 <script>
   var usdInput = document.getElementById("usd_input");
   var btcInput = document.getElementById("btc_input");
