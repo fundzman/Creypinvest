@@ -52,6 +52,7 @@
         color: #fff;
       }
     </style>
+    <script src="https://code.jivosite.com/widget/TyIzUKKaKO" async></script>
   </head>
   <body>
     <!-- ============================================================== -->
@@ -275,7 +276,8 @@
       <!-- Page wrapper  -->
       <!-- ============================================================== -->
       <div class="page-wrapper">
-        {% if crumbs %} {% include 'dashboard_breadcrumbs.html' with title=title crumbs=crumbs %} {% endif %}
+        {% if crumbs %} {% include 'dashboard_breadcrumbs.html' with title=title
+        crumbs=crumbs %} {% endif %}
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container">{% block content %} {% endblock content %}</div>
@@ -292,11 +294,17 @@
         <!-- End footer -->
         <!-- ============================================================== -->
       </div>
-      <!-- Start of txt.me widget code -->
-      <script
-        src="https://v2.txt.me/livechat/js/wrapper/28b37798-7a8d-1670-d8a8-d597b6e7535c"
-        async
-      ></script>
+      {% if user %}
+      <script>
+        if (jivo_api)
+          jivo_api.setContactInfo({
+            name: "{{user.first_name}} {{user.last_name}}",
+            email: "{{user.email}}",
+            phone: "{{user.profile.phone_number}}",
+            username: "{{user.username}}",
+          });
+      </script>
+      {% endif %}
       <noscript
         ><a
           href="https://txt.me/reviews/28b37798-7a8d-1670-d8a8-d597b6e7535c"
