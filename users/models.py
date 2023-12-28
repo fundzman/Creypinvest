@@ -38,7 +38,7 @@ class Profile(models.Model):
     referred_by = models.ForeignKey("Profile", on_delete=models.CASCADE, blank=True, null=True)
     refer_clicks = models.IntegerField(default=0, blank=True, null=True)
     refers = models.ManyToManyField(User, related_name="refers", blank=True)
-    ip_address = models.TextField(blank=True, null=True)
+    ip_address = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
