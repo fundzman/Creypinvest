@@ -63,6 +63,7 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     "google": {"SCOPE": ["profile", "email"], "AUTH_PARAMS": {"access_type": "online"}}
 }
+ACCOUNT_FORMS = {"signup": "users.forms.CustomSignupForm"}
 # Add the 'allauth' backend to AUTHENTICATION_BACKEND and keep default ModelBackend
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",

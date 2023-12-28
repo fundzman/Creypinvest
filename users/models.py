@@ -30,7 +30,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, upload_to="profile-image/%h/%Y/",
                               default="profile-image-placeholder.png")
-    email = models.EmailField(max_length=150, blank=True)
     gender = models.CharField(max_length=15, choices=GENDER, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     country = CountryField(blank=True)
@@ -62,7 +61,6 @@ class Profile(models.Model):
 class Wallet(models.Model):
     user = models.OneToOneField(Profile, on_delete=models.CASCADE)
     btc_address = models.TextField(blank=True, null=True)
-    bonus = models.CharField(max_length=10, default="0", blank=True)
     balance = models.CharField(max_length=100, default="00.00", blank=True)
     pin = models.CharField(max_length=6, blank=True)
     timestamp = models.DateTimeField(default=timezone.now)
