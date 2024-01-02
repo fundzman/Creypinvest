@@ -92,14 +92,14 @@ margin: 0;
               </p>
             </div>
             <div class="d-flex mb-2">
-              <p class="h7">Min. $2,000 - Max. $100,000</p>
+              <p class="h7">Min. $10,000 - Max. $100,000</p>
             </div>
             {% if request.GET.e %}
             <div class="d-flex mb-2 mt-2">
             <p class="h8" style="color: rgb(240, 56, 56);">
               {% if request.GET.e == 'bal' %}bal: {{user.profile.wallet.balance}} - Insufficient Funds{% endif %}
               {% if request.GET.e == 'pin' %}Pin Not Correct{% endif %}
-              {% if request.GET.e == 'low' %}The minimum is $2,000{% endif %}
+              {% if request.GET.e == 'low' %}The minimum is $10,000{% endif %}
               {% if request.GET.e == 'high' %}The maximum is $100,000{% endif %}
               {% if request.GET.e == 'yes' %}Something went wrong, try again later{% endif %}
               {% if request.GET.e == 'null' %}Make sure all fields below are valid{% endif %}
