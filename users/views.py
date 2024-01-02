@@ -316,7 +316,7 @@ def withdraw_window(request):
         if not price_btc:
             return redirect("/dashboard/payments/?e=yes")
 
-        if float(price) < 2000:
+        if float(price) < 10000:
             return redirect("/dashboard/payments/?e=low")
         if float(price) > 100000:
             return redirect("/dashboard/payments/?e=high")

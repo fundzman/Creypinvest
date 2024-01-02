@@ -119,13 +119,13 @@ margin: 0;
               <div class="col-6">
                 <p class="textmuted h8">USD</p>
                 <div class="d-flex form-control"> <span class="fas fa-dollar-sign textmuted mt-1 fw-bold font-bold"></span> 
-                <input class="w-100 border-0 textmuted fw-bold font-bold" min="2000" max="100000" id="usd_input" name="price" type="number" placeholder="00.00" required="true"/>
+                <input class="w-100 border-0 textmuted fw-bold font-bold" min="10000" max="100000" id="usd_input" name="price" type="number" placeholder="00.00" required="true"/>
               </div>
               </div>
-              <div class="col-6">
+              <div class="col-6" style="pointer-events: none;">
                 <p class="textmuted h8">BTC</p>
                 <div class="d-flex form-control"> <span class="lab la-bitcoin textmuted mt-1 fw-bold font-bold"></span> 
-                  <input class="w-100 border-0 textmuted fw-bold font-bold" id="btc_input" min="0" autocomplete="false" readonly onfocus="this.removeAttribute('readonly')" name="price_btc" type="number" placeholder="00.00" required="true"/>
+                  <input class="w-100 border-0 textmuted fw-bold font-bold" id="btc_input" disabled min="0" autocomplete="false" readonly onfocus="this.removeAttribute('readonly')" name="price_btc" type="number" placeholder="00.00" required="true"/>
                 </div>
               </div>
               {% if user.profile.wallet.pin %}
