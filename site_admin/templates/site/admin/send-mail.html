@@ -1,0 +1,76 @@
+{% extends 'site/admin-base.html' %} {% block content %}
+<style>
+  .form-control {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .btn {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .alert {
+    font-size: 20px;
+    margin: 0 auto;
+  }
+  .alert-danger {
+    color: red;
+  }
+
+  .alert-success {
+    color: green;
+  }
+</style>
+{% if success != True %}
+<h3>Send Mail To Client</h3>
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+<br />
+{% endif %}
+<form action="" method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <input
+      type="email"
+      name="email"
+      id="email"
+      class="form-control"
+      placeholder="Email"
+    />
+  </div>
+  <br />
+  <div class="form-group">
+    <input
+      type="text"
+      name="subject"
+      id="subject"
+      class="form-control"
+      placeholder="Subject"
+    />
+  </div>
+  <br />
+  <div class="form-group">
+    <textarea
+      name="message"
+      id="message"
+      cols="30"
+      rows="10"
+      class="form-control"
+      placeholder="Message"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <input
+      type="submit"
+      value="Send"
+      class="btn btn-primary btn-block btn-lg"
+    />
+  </div>
+</form>
+ {% else %}
+<h3>Mail Sent Successfully to 
+  {{ email }}
+</h3>
+<a href="{% url 'admin-send-email' %}" class="alert alert-success"
+  >Send Another Mail</a
+>
+{% endif %} {% endblock content %}
