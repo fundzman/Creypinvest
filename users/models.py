@@ -63,6 +63,7 @@ class Wallet(models.Model):
     btc_address = models.TextField(blank=True, null=True)
     balance = models.CharField(max_length=100, default="00.00", blank=True)
     pin = models.CharField(max_length=6, blank=True)
+    amount_invested = models.CharField(max_length=100, default="00.00", blank=True)
     timestamp = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

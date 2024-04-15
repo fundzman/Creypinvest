@@ -17,15 +17,16 @@ def dashboard_home_view(request):
         first_bal = bal[0]
         second_bal = bal[1]
         transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
-        amount_invested = 0
-        for transaction in (
-            transactions.exclude(status="pending")
-            .exclude(status="processing")
-            .exclude(status="confirming")
-            .exclude(status="error")
-            .exclude(status="failed")
-        ):
-            amount_invested += int(transaction.amount)
+        amount_invested = float(qs.amount_invested)
+        if amount_invested == 0:
+            for transaction in (
+                transactions.exclude(status="pending")
+                .exclude(status="processing")
+                .exclude(status="confirming")
+                .exclude(status="error")
+                .exclude(status="failed")
+            ):
+                amount_invested += float(transaction.amount)
 
         context = {
             "title": "Dashboard",
@@ -129,15 +130,16 @@ def dashboard_payments_view(request):
         first_bal = bal[0]
         second_bal = bal[1]
         transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
-        amount_invested = 0
-        for transaction in (
-            transactions.exclude(status="pending")
-            .exclude(status="processing")
-            .exclude(status="confirming")
-            .exclude(status="error")
-            .exclude(status="failed")
-        ):
-            amount_invested += int(transaction.amount)
+        amount_invested = float(qs.amount_invested)
+        if amount_invested == 0:
+            for transaction in (
+                transactions.exclude(status="pending")
+                .exclude(status="processing")
+                .exclude(status="confirming")
+                .exclude(status="error")
+                .exclude(status="failed")
+            ):
+                amount_invested += float(transaction.amount)
         context = {
             "title": "Payments",
             "crumbs": ["Payment"],
