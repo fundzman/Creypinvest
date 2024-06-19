@@ -3,7 +3,7 @@ autopep8==1.6.0
 boto3==1.22.4
 botocore==1.25.4
 certifi==2021.10.8
-cffi==1.15.0
+cffi
 charset-normalizer==2.0.12
 crispy-tailwind==0.5.0
 cryptography==37.0.1
