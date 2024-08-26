@@ -8,26 +8,60 @@
       <div class="form-title">
         <div class="header">
           <img src="{% static 'images/logo/logo.png' %}" />
-          <h2>Deposit Bitcoin</h2>
+          <h2 id="cyp">Deposit Bitcoin</h2>
         </div>
-        <h5>Copy and send bitcoin to your generated bitcoin deposit address</h5>
+        <h5 id="cyp">Copy and send Bitcoin to your generated Bitcoin deposit address</h5>
+      </div>
+       <div class="control-group">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-secondary active" id="btc-btn" data-address="{{btc_address}}">Bitcoin</button>
+          <button type="button" class="btn btn-secondary" id="eth-btn" data-address="{{eth_address}}">Ethereum</button>
+          <!-- add btn styles -->
+          <style>
+            .btn-group button {
+              background-color: #f8f8f8;
+              border: 1px solid #f8f8f8;
+              color: #000;
+              padding: 10px 24px;
+              cursor: pointer;
+              border-radius: 5px;
+              font-size: 16px;
+              margin-right: 10px;
+            }
+            .btn-group button.active {
+              background-color: #000;
+              color: #fff;
+            }
+            /* add hover */
+            .btn-group button:hover {
+              background-color: #000;
+              color: #fff;
+            }
+            /* add active (not) to scale down a bit when clicked */
+            .btn-group button:active {
+              transform: scale(0.9);
+            }
+          </style>
+       </div>
       </div>
       <div class="control-group to-field">
         <ul class="send-by">
-          <li class="active by-bitcoin" onclick="copyToClipboard('#generated-address')"><i class="lab la-bitcoin"></i>{{price_total_btc}}</li>
+          <li class="active by-bitcoin" 
+          onclick="copyToClipboard('#addressTxt')">
+          <i class="lab la-bitcoin"></i>{{price_total_btc}}</li>
         </ul>      
         <div class="btc">
           <label for="btc">You Pay <i class="las la-long-arrow-alt-right"></i></label>
-          <input type="text" readonly="readonly" placeholder="Copy Bitcoin address" id="btc" value="{{btc_address}}" disabled="true" onclick="copyToClipboard('#generated-address')"/>
-          <p id="generated-address" style="display:none;">{{btc_address}}</p>
-          <i class="las la-copy copy-generated-address" onclick="copyToClipboard('#generated-address')"></i>
-          <img src="https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address={{btc_address}}" height="300" width="300" border="0" alt="Bitcoin QR code" style="
+          <input type="text" readonly="readonly" placeholder="Copy Bitcoin address" id="btc" value="{{btc_address}}" disabled="true" onclick="copyToClipboard('#addressTxt')"/>
+          <p id="addressTxt" style="display:none;">{{btc_address}}</p>
+          <i class="las la-copy copy-generated-address" onclick="copyToClipboard('#addressTxt')"></i>
+          <img id="addressImg" src="https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address={{btc_address}}" height="300" width="300" border="0" alt="Bitcoin QR code" style="
     margin: auto;
 " title="bitcoin:{{btc_address}}">
         </div>
       </div>
-      <div class="control-group amount-fields">
-        <p class="available">Send Only Bitcoin to <span onclick="copyToClipboard('#generated-address')">({{btc_address}})</span></p>
+      <div class="control-group amount-fields hide">
+        <p class="available" id="cyp">Send Only Bitcoin to <span id="addressTxt" onclick="copyToClipboard('#addressTxt')">({{btc_address}})</span></p>
       </div>
     </div>
     <div class="step-2 hide">
@@ -39,23 +73,23 @@
       </div>
       <div class="control-group">
         <label>To:</label>
-        <input readonly="readonly" type="text" onclick="copyToClipboard('#generated-address')" value="{{btc_address}}"/>
+        <input readonly="readonly" type="text" id="addressVal" onclick="copyToClipboard('#addressTxt')" value="{{btc_address}}"/>
       </div>
       <div class="control-group">
         <ul class="total-amounts">
           <li class="amount-item">
             <p>Amount:</p>
-            <p>{{price_btc}} BTC</p>
+            <p id="cyp">{{price_btc}} BTC</p>
             <p>${{price}} USD </p>
           </li>
           <li class="amount-item">
             <p>Fee:</p>
-            <p>{{price_fees_btc}} BTC</p>
+            <p id="cyp">{{price_fees_btc}} BTC</p>
             <p>${{price_fees}} USD <span style="font-weight: 300;"> why? </span></p>
           </li>
           <li class="amount-item total-item">
             <p>Total:</p>
-            <p>{{price_total_btc}} BTC</p>
+            <p id="cyp">{{price_total_btc}} BTC</p>
             <p>${{price_total}} USD</p>
           </li>
         </ul>
@@ -91,4 +125,84 @@
       </button>
     </div>
   </form>
+  <!-- add vanila script to toggle between eth and btc -->
+  <script>
+    const btcBtn = document.getElementById('btc-btn');
+    const ethBtn = document.getElementById('eth-btn');
+    let currentCurrency = 'BTC';
+    btcBtn.addEventListener('click', () => {
+      btcBtn.classList.add('active');
+      ethBtn.classList.remove('active');
+
+      // change current selected address values and txts
+      const btcAddress = btcBtn.getAttribute('data-address');
+      const btcAddressTxt = btcBtn.getAttribute('data-address').replaceAll('btc', '');
+
+      document.getElementById('btc').value = btcAddress;
+      document.getElementById('addressTxt').innerText = btcAddressTxt;
+
+      // get all addressVals and change them
+      const addressVals = document.querySelectorAll('#addressVal');
+      addressVals.forEach(addressVal => {
+        addressVal.value = btcAddress;
+      });
+
+      // get all addressTxts and change them
+      const addressTxts = document.querySelectorAll('#addressTxt');
+      addressTxts.forEach(addressTxt => {
+        addressTxt.innerText = btcAddressTxt;
+      });
+
+      document.getElementById('addressImg').src = `https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address=${btcAddress}`;
+      
+      // replaceAll all eth values with btc values
+      // document.getElementById('cyp').innerText = document.getElementById('cyp').innerText.replaceAll('ETH', 'BTC');
+      const cyps = document.querySelectorAll('#cyp');
+      cyps.forEach(cyp => {
+        cyp.innerText = cyp.innerText.replaceAll('ETH', 'BTC');
+        cyp.innerText = cyp.innerText.replaceAll('Ethereum', 'Bitcoin');
+      });
+
+      // chnage lab la-ethereum to lab la-bitcoin
+      const byBitcoin = document.querySelector('.by-bitcoin');
+      byBitcoin.innerHTML = '<i class="lab la-bitcoin"></i> {{price_total_btc}}';
+
+    });
+    ethBtn.addEventListener('click', () => {
+      ethBtn.classList.add('active');
+      btcBtn.classList.remove('active');
+
+      // change current selected address values and txts
+      const ethAddress = ethBtn.getAttribute('data-address');
+      const ethAddressTxt = ethBtn.getAttribute('data-address').replaceAll('eth', '');
+
+      document.getElementById('btc').value = ethAddress;
+      document.getElementById('addressTxt').innerText = ethAddressTxt;
+
+      // get all addressVals and change them
+      const addressVals = document.querySelectorAll('#addressVal');
+      addressVals.forEach(addressVal => {
+        addressVal.value = ethAddress;
+      });
+
+      // get all addressTxts and change them
+      const addressTxts = document.querySelectorAll('#addressTxt');
+      addressTxts.forEach(addressTxt => {
+        addressTxt.innerText = ethAddressTxt;
+      });
+
+      document.getElementById('addressImg').src = `https://www.bitcoinqrcodemaker.com/api/?style=ethereum&amp;address=${ethAddress}`;
+      // replaceAll all cyp values with eth values
+      // document.getElementById('cyp').innerText = document.getElementById('cyp').innerText.replaceAll('BTC', 'ETH');
+      const cyps = document.querySelectorAll('#cyp');
+      cyps.forEach(cyp => {
+        cyp.innerText = cyp.innerText.replaceAll('BTC', 'ETH');
+        cyp.innerText = cyp.innerText.replaceAll('Bitcoin', 'Ethereum');
+      });
+
+      // chnage lab la-bitcoin to lab la-ethereum
+      const byBitcoin = document.querySelector('.by-bitcoin');
+      byBitcoin.innerHTML = '<i class="lab la-ethereum"></i> {{price_total_btc}}';
+    });
+  </script>
 {% endblock content %}

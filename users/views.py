@@ -58,15 +58,17 @@ def deposit_amount_auth(request, pack):
                 return redirect("deposit")
         display_price = price
         price = str(price).replace("$", "").replace(",", "")
-        admin_btc_address = AdminWallet.objects.all()
+        admin_btc_address_qs = AdminWallet.objects.all()
 
-        admin_btc_address = admin_btc_address.first()
+        admin_btc_address = admin_btc_address_qs.first()
+        admin_eth_address = admin_btc_address_qs.exclude(btc_address=admin_btc_address.btc_address).first()
         display_price = display_price
         raw_price = int(price)
         context = {
             "raw_price": raw_price,
             "display_price": display_price,
             "btc_address": admin_btc_address,
+            "eth_address": admin_eth_address,
             "plan": pack,
             "crumbs": ["Deposit Now", "Select Amount", "Checkout"],
             "type": "Checkout",
@@ -118,8 +120,10 @@ def deposit_window(request):
         profile = Profile.objects.filter(user=user).first()
         wallet = Wallet.objects.filter(user=profile).first()
         user_ = User.objects.filter(username=user.username).first()
-        admin_btc_address = AdminWallet.objects.all()
-        admin_btc_address = admin_btc_address.first()
+        admin_btc_address_qs = AdminWallet.objects.all()
+
+        admin_btc_address = admin_btc_address_qs.first()
+        admin_eth_address = admin_btc_address_qs.exclude(btc_address=admin_btc_address.btc_address).first()
 
         context = {
             "plan": plan,
@@ -130,6 +134,7 @@ def deposit_window(request):
             "price_total": price_total,
             "price_total_btc": price_total_btc,
             "btc_address": admin_btc_address,
+            "eth_address": admin_eth_address,
         }
         error = None
         if pin1 == None:
@@ -149,6 +154,7 @@ def deposit_window(request):
                 "price_total": price_total,
                 "price_total_btc": price_total_btc,
                 "btc_address": admin_btc_address,
+                "eth_address": admin_eth_address,
                 "error": error,
             }
 
