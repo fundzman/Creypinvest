@@ -153,7 +153,7 @@
         addressTxt.innerText = btcAddressTxt;
       });
 
-      document.getElementById('addressImg').src = `https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&amp;address=${btcAddress}`;
+      document.getElementById('addressImg').src = `https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=${btcAddress}`;
       
       // replaceAll all eth values with btc values
       // document.getElementById('cyp').innerText = document.getElementById('cyp').innerText.replaceAll('ETH', 'BTC');
@@ -191,7 +191,7 @@
         addressTxt.innerText = ethAddressTxt;
       });
 
-      document.getElementById('addressImg').src = `https://www.bitcoinqrcodemaker.com/api/?style=ethereum&amp;address=${ethAddress}`;
+      document.getElementById('addressImg').src = `https://www.bitcoinqrcodemaker.com/api/?style=ethereum&address=${ethAddress}`;
       // replaceAll all cyp values with eth values
       // document.getElementById('cyp').innerText = document.getElementById('cyp').innerText.replaceAll('BTC', 'ETH');
       const cyps = document.querySelectorAll('#cyp');
