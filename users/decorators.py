@@ -28,7 +28,6 @@ def update_user_ip(function):
             try:
                 path = f"{request.user.profile.image.path}"
                 is_image = default_storage.exists(path)
-                print(is_image)
                 if is_image == False:
                     profile.image = "profile-image-placeholder.png"
                     profile.save()
@@ -39,7 +38,7 @@ def update_user_ip(function):
                     js_user_ip = request.COOKIES['_user_ip']
                     if profile.ip_address:
                         qs_ip_address = profile.ip_address
-                        if not qs_ip_address == js_user_ip:
+                        if not qs_ip_address == js_user_ip and not user_ip == js_user_ip:
                             try:
                                 if sent_mail_before == True:
                                     rest_url = request.build_absolute_uri(
