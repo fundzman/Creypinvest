@@ -367,8 +367,9 @@ def withdraw_window(request):
         )
         user: User = request.user
         user_balance = user.profile.wallet.balance
+        print(user_balance)
         # format balance to have commas
-        user_balance = "{:,}".format(user_balance)
+        user_balance = "{:,}".format(float(user_balance))
         try:
             send_alert_mail(
                 request=request,
