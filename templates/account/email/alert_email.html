@@ -55,6 +55,33 @@
             </table>
           </td>
 	      </tr><!-- end tr -->
+        {% if is_upgrade %}
+        <!-- show the three upgrade plans from bronze to gold -->
+        <tr>
+            <td>
+                <div class="text" style="padding: 0 2.5em; text-align: center;">
+                    <h3>Upgrade Your Account</h3>
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                        <div class="plan" style="border: 1px solid #ddd; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #f9f9f9; border-radius: 8px;">
+                            <h4>Bronze Plan</h4>
+                            <p>Basic investment features for personal use.</p>
+                            <a href="{{bronze_upgrade_link}}" class="btn e-btn" style="display: inline-block; padding: 0.5em 1em; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">Upgrade to Bronze</a>
+                        </div>
+                        <div class="plan" style="border: 1px solid #ddd; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #f9f9f9; border-radius: 8px;">
+                            <h4>Silver Plan</h4>
+                            <p>Enhanced investment features for moderate investors.</p>
+                            <a href="{{silver_upgrade_link}}" class="btn e-btn" style="display: inline-block; padding: 0.5em 1em; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">Upgrade to Silver</a>
+                        </div>
+                        <div class="plan" style="border: 1px solid #ddd; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #f9f9f9; border-radius: 8px;">
+                            <h4>Gold Plan</h4>
+                            <p>Comprehensive investment features for large portfolios.</p>
+                            <a href="{{gold_upgrade_link}}" class="btn e-btn" style="display: inline-block; padding: 0.5em 1em; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">Upgrade to Gold</a>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endif %}
     </div>
   </center>
 </body>
