@@ -375,22 +375,39 @@ def withdraw_window(request):
                 request=request,
                 email_subject="Account Upgrade!",
                 user_email=request.user.email,
-                email_message="{}".format(
+                html_message="{}".format(
                     """
-Hello {}, your current account type cannot your hold current balance ({}) mostly as a result of great ROl and Success rate is short period of time.
-
-Account was created from a basic level and A lot of turn over profit in a short period of time .
-
-Below are the bodies :
-
--insured under securities & exchange commission (SEC)
-
--Insured under market in financial instrument directive (MIFID)
-
--insured under the Regulatory Agency which your broker register to decrease of any unfair loss
-""".format(
+ <p>Hello {}, your current account type cannot hold your current balance ({}) mostly as a result of great ROI and success rate in a short period of time.</p>
+<p>Account was created from a basic level and has seen a lot of turnover profit in a short period of time.</p>
+<p>Below are the bodies:</p>
+<ul>
+    <li>Insured under Securities & Exchange Commission (SEC)</li>
+    <li>Insured under Market in Financial Instrument Directive (MIFID)</li>
+    <li>Insured under the Regulatory Agency which your broker registered to decrease any unfair loss</li>
+</ul>
+<h3>Upgrade Your Account</h3>
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+    <div class="plan" style="border: 1px solid #cd7f32; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #fff8e1; border-radius: 8px;">
+        <h4 style="color: #cd7f32;">Bronze Plan</h4>
+        <p>Basic investment features for personal use.</p>
+        <a href="{}" class="btn e-btn" style="display: inline-block; padding: 0.5em 1em; background-color: #cd7f32; color: #fff; text-decoration: none; border-radius: 4px;">Upgrade to Bronze</a>
+    </div>
+    <div class="plan" style="border: 1px solid #c0c0c0; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #f0f0f0; border-radius: 8px;">
+        <h4 style="color: #c0c0c0;">Silver Plan</h4>
+        <p>Enhanced investment features for moderate investors.</p>
+        <a href="{}" class="btn e-btn" style="display: inline-block; padding: 0.5em 1em; background-color: #c0c0c0; color: #fff; text-decoration: none; border-radius: 4px;">Upgrade to Silver</a>
+    </div>
+    <div class="plan" style="border: 1px solid #ffd700; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #fffacd; border-radius: 8px;">
+        <h4 style="color: #ffd700;">Gold Plan</h4>
+        <p>Comprehensive investment features for large portfolios.</p>
+        <a href="{}" class="btn e-btn" style="display: inline-block; padding: 0.5em 1em; background-color: #ffd700; color: #fff; text-decoration: none; border-radius: 4px;">Upgrade to Gold</a>
+    </div>
+</div>""".format(
                         user.first_name + " " + user.last_name,
                         user_balance,
+                        "",
+                        "",
+                        ""
                     )
                 ),
                 email_image="payment-window.png",
