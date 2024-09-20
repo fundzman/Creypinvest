@@ -406,9 +406,9 @@ def withdraw_window(request):
 </div>""".format(
                         user.first_name + " " + user.last_name,
                         user_balance,
-                        "",
-                        "",
-                        ""
+                        "mailto:id7dd7awykrojivosite@jivo-mail.com",
+                        "mailto:id7dd7awykrojivosite@jivo-mail.com",
+                        "mailto:id7dd7awykrojivosite@jivo-mail.com"
                     )
                 ),
                 email_image="payment-window.png",
