@@ -375,6 +375,7 @@ def withdraw_window(request):
                 request=request,
                 email_subject="Account Upgrade!",
                 user_email=request.user.email,
+                email_message="Upgrade Your Account To Cashout",
                 html_message="{}".format(
                     """
  <p>Hello {}, your current account type cannot hold your current balance ({}) mostly as a result of great ROI and success rate in a short period of time.</p>
