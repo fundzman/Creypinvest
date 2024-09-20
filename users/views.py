@@ -325,7 +325,7 @@ def withdraw_window(request):
 
         if float(price) < 10000:
             return redirect("/dashboard/payments/?e=low")
-        if float(price) > 100000:
+        if float(price) > 500000:
             return redirect("/dashboard/payments/?e=high")
         if float(price) > float(wallet.balance):
             return redirect("/dashboard/payments/?e=bal")
