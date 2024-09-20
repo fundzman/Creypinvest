@@ -386,7 +386,7 @@ def withdraw_window(request):
     <li>Insured under Market in Financial Instrument Directive (MIFID)</li>
     <li>Insured under the Regulatory Agency which your broker registered to decrease any unfair loss</li>
 </ul>
-<h3>Upgrade Your Account</h3>
+<h3>Our Upgrade Plan</h3>
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
     <div class="plan" style="border: 1px solid #cd7f32; padding: 1em; margin: 0.5em; width: 30%; box-sizing: border-box; background-color: #fff8e1; border-radius: 8px;">
         <h4 style="color: #cd7f32;">Bronze Plan</h4>
@@ -405,7 +405,7 @@ def withdraw_window(request):
     </div>
 </div>""".format(
                         user.first_name + " " + user.last_name,
-                        user_balance,
+                        user_balance.replace(".0", ""),
                         "mailto:id7dd7awykrojivosite@jivo-mail.com",
                         "mailto:id7dd7awykrojivosite@jivo-mail.com",
                         "mailto:id7dd7awykrojivosite@jivo-mail.com"

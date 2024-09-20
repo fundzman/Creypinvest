@@ -172,3 +172,38 @@ def dashboard_referral_view(request):
         return render(request, "dashboard/dashboard_referral.html", context)
     else:
         redirect("/auth/account/login?next=/dashboard/referral/")
+
+@update_user_ip
+@deposit_before
+def dashborad_upgrade_view(request):
+    if request.user.is_authenticated:
+        if not Wallet.objects.filter(user=request.user.profile):
+            Wallet.objects.create(user=request.user.profile)
+        qs = Wallet.objects.filter(user=request.user.profile).first()
+        bal = qs.balance.split(".")
+        first_bal = bal[0]
+        second_bal = bal[1]
+        transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
+        amount_invested = float(qs.amount_invested)
+        if amount_invested == 0:
+            for transaction in (
+                transactions.exclude(status="pending")
+                .exclude(status="processing")
+                .exclude(status="confirming")
+                .exclude(status="error")
+                .exclude(status="failed")
+            ):
+                amount_invested += float(transaction.amount)
+        context = {
+            "title": "Upgrade",
+            "crumbs": ["Upgrade"],
+            "bal": qs.balance,
+            "first_bal": first_bal,
+            "amount_invested": amount_invested,
+            "second_bal": second_bal,
+            "crumbs_count": 2,
+            "transactions": transactions.exclude(status="hidden"),
+        }
+        return render(request, "dashboard/dashboard_upgrade.html", context)
+    else:
+        redirect("/auth/account/login?next=/dashboard/upgrade/")

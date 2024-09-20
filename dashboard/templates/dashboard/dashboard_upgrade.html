@@ -1,0 +1,125 @@
+{% extends 'dashboard_base.html' %} 
+{% block head_title %}{{title}}{% endblock head_title %}
+{% block content %}
+<div class="upgrade-container">
+    <h2>Upgrade Your Account</h2>
+    <p>Choose the best plan that suits your investment needs and enjoy exclusive benefits.</p>
+    
+    <div class="plans">
+        <div class="plan bronze">
+            <h3>Bronze Plan</h3>
+            <p>Basic features to get you started.</p>
+            <ul>
+                <li>Access to basic investment tools</li>
+                <li>Monthly market analysis</li>
+                <li>Email support</li>
+            </ul>
+            <a class="support-button" href="mailto:id7dd7awykrojivosite@jivo-mail.com">Contact Support</a>
+        </div>
+        
+        <div class="plan silver popular">
+            <h3>Silver Plan</h3>
+            <p>Advanced features for serious investors.</p>
+            <ul>
+                <li>All Bronze features</li>
+                <li>Weekly market analysis</li>
+                <li>Priority email support</li>
+                <li>Access to premium tools</li>
+            </ul>
+            <a class="support-button" href="mailto:id7dd7awykrojivosite@jivo-mail.com">Contact Support</a>
+        </div>
+        
+        <div class="plan gold">
+            <h3>Gold Plan</h3>
+            <p>All-inclusive features for professional investors.</p>
+            <ul>
+                <li>All Silver features</li>
+                <li>Daily market analysis</li>
+                <li>24/7 phone support</li>
+                <li>Personal investment advisor</li>
+            </ul>
+            <a class="support-button" href="mailto:id7dd7awykrojivosite@jivo-mail.com">Contact Support</a class="support-button">
+        </div>
+    </div>
+    
+    <section class="faq"></section>
+        <h3>Frequently Asked Questions</h3>
+        <details class="faq-item">
+            <summary>Why should I upgrade my account?</summary>
+            <p>Upgrading your account gives you access to more advanced tools and support, helping you make better investment decisions.</p>
+        </details>
+        <details class="faq-item">
+            <summary>Can I change my plan later?</summary>
+            <p>Yes, you can upgrade or downgrade your plan at any time by contacting support.</p>
+        </details>
+        <details class="faq-item">
+            <summary>Why do I need to upgrade my account before I can withdraw?</summary>
+            <p>Upgrading your account ensures that you have access to the necessary tools and support to manage your investments effectively, including withdrawals.</p>
+        </details>
+        <details class="faq-item">
+            <summary>Can I only change my plan by contacting support?</summary>
+            <p>Yes, to ensure a smooth transition and proper handling of your account, plan changes must be processed through our support team.</p>
+        </details>
+    </section>
+</div>
+{% endblock content %}
+
+{% block css %}
+<style>
+    .upgrade-container {
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+    .plans {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .plan {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        width: 30%;
+        text-align: center;
+        background-color: #fff;
+    }
+    .plan.bronze {
+        border-color: #cd7f32;
+    }
+    .plan.silver {
+        border-color: #c0c0c0;
+    }
+    .plan.gold {
+        border-color: #ffd700;
+    }
+    .plan.popular {
+        border-width: 2px;
+        position: relative;
+    }
+    .plan.popular::after {
+        content: "Popular";
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: #ff0;
+        color: #000;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+    .faq {
+        margin-top: 40px;
+    }
+    .faq-item {
+        margin-bottom: 20px;
+    }
+    a.support-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+{% endblock css %}
