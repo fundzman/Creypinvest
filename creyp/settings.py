@@ -93,8 +93,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-if DEBUG:
-    MIDDLEWARE += ["allauth.account.middleware.AccountMiddleware"]
+# if DEBUG:
+#     MIDDLEWARE += ["allauth.account.middleware.AccountMiddleware"]
 
 ROOT_URLCONF = "creyp.urls"
 

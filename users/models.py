@@ -17,36 +17,38 @@ STATUS = (
     ("processing", "processing"),
     ("confirming", "confirming"),
     ("error", "error"),
-    ("failed", "failed")
+    ("failed", "failed"),
 )
-GENDER = (
-    ("female", "female"),
-    ("male", "male"),
-    ("other", "other")
-)
+GENDER = (("female", "female"), ("male", "male"), ("other", "other"))
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, upload_to="profile-image/%h/%Y/",
-                              default="profile-image-placeholder.png")
+    image = models.ImageField(
+        blank=True,
+        upload_to="profile-image/%h/%Y/",
+        default="profile-image-placeholder.png",
+    )
     gender = models.CharField(max_length=15, choices=GENDER, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     country = CountryField(blank=True)
     signup_confirmation = models.BooleanField(default=False)
     deposit_before = models.BooleanField(default=False)
-    referred_by = models.ForeignKey("Profile", on_delete=models.CASCADE, blank=True, null=True)
+    referred_by = models.ForeignKey(
+        "Profile", on_delete=models.CASCADE, blank=True, null=True
+    )
     refer_clicks = models.IntegerField(default=0, blank=True, null=True)
     refers = models.ManyToManyField(User, related_name="refers", blank=True)
     ip_address = models.CharField(max_length=100, blank=True, null=True)
+    has_upgraded = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
-    
+
     @property
     def first_name(self):
         return self.user.first_name
-    
+
     @property
     def last_name(self):
         return self.user.last_name
@@ -80,7 +82,7 @@ class Transaction(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
-        ordering = ['-timestamp', '-id']
+        ordering = ["-timestamp", "-id"]
 
     def __str__(self):
         return f"user has {self.wallet.balance} | TID: {self.transactionId}"
@@ -99,6 +101,7 @@ class AdminWallet(models.Model):
     def __str__(self):
         return f"{self.btc_address}"
 
+
 class AdminTransaction(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     plan = models.CharField(max_length=100, blank=True)
@@ -113,6 +116,7 @@ class AdminTransaction(models.Model):
             return f"{self.wallet.btc_address} debited ${self.amount}"
         else:
             return f"{self.wallet.btc_address} transfered ${self.amount}"
+
 
 @receiver(post_save, sender=User)
 def update_profile_signal(sender, instance, created, **kwargs):

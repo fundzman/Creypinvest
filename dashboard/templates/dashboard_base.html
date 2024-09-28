@@ -214,6 +214,7 @@
                   <span class="hide-menu">Wallet</span></a
                 >
               </li>
+              {% if not request.user.profile.has_upgraded %}
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link {% if title == 'Upgrade' %}active{% endif %}"
@@ -224,6 +225,7 @@
                   <span class="hide-menu">Upgrade Account</span></a
                 >
               </li>
+              {% endif %}
               <!-- <i class="las la-wallet"></i> -->
               <li class="sidebar-item">
                 <a

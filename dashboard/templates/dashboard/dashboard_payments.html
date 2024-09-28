@@ -107,7 +107,40 @@ margin: 0;
           </div>
             {% endif %}
             <div class="row">
-              <div class="col-12 mb-2">
+              <!-- button for crypo and bank tranfer -->
+              <div class="control-group" style="margin-bottom: 10px;">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btn-secondary active" id="crypo-btn">Crypo</button>
+                  <button type="button" class="btn btn-secondary" id="bank-transfer-btn">Bank Transfer</button>
+                  <!-- add btn styles -->
+                  <style>
+                    .btn-group button {
+                      background-color: #f8f8f8;
+                      border: 1px solid #f8f8f8;
+                      color: #000;
+                      padding: 10px 24px;
+                      cursor: pointer;
+                      border-radius: 5px;
+                      font-size: 16px;
+                      margin-right: 10px;
+                    }
+                    .btn-group button.active {
+                      background-color: #000;
+                      color: #fff;
+                    }
+                    /* add hover */
+                    .btn-group button:hover {
+                      background-color: #000;
+                      color: #fff;
+                    }
+                    /* add active (not) to scale down a bit when clicked */
+                    .btn-group button:active {
+                      transform: scale(0.9);
+                    }
+                  </style>
+               </div>
+              </div>
+              <div class="col-12 mb-2" id="btc-address-input">
                 <p class="textmuted h8">Your Bitcoin Address</p>
                 <input
                   class="form-control"
@@ -116,13 +149,13 @@ margin: 0;
                   placeholder=""
                 />
               </div>
-              <div class="col-6">
+              <div class="col-6" id="usd-input-body">
                 <p class="textmuted h8">USD</p>
                 <div class="d-flex form-control"> <span class="fas fa-dollar-sign textmuted mt-1 fw-bold font-bold"></span> 
                 <input class="w-100 border-0 textmuted fw-bold font-bold" min="10000" max="100000" id="usd_input" name="price" type="number" placeholder="00.00" required="true"/>
               </div>
               </div>
-              <div class="col-6" style="pointer-events: none;">
+              <div class="col-6" style="pointer-events: none;" id="btn_input">
                 <p class="textmuted h8">BTC</p>
                 <div class="d-flex form-control"> <span class="lab la-bitcoin textmuted mt-1 fw-bold font-bold"></span> 
                   <input class="w-100 border-0 textmuted fw-bold font-bold" id="btc_input" disabled min="0" autocomplete="false" readonly onfocus="this.removeAttribute('readonly')" name="price_btc" type="number" placeholder="00.00" required="true"/>
@@ -232,5 +265,35 @@ margin: 0;
       bitcoinPrice.send();
     }, 1000);
   }
+</script>
+<!-- script for crypto and bank transfer -->
+<script>
+  const cryptoBtn = document.getElementById('crypo-btn');
+  const bankTransferBtn = document.getElementById('bank-transfer-btn');
+  let currentCashoutBtn = 'Crypo';
+  cryptoBtn.addEventListener('click', () => {
+    cryptoBtn.classList.add('active');
+    bankTransferBtn.classList.remove('active');
+
+    // add btc address input and remove btc_input
+    document.getElementById('btc-address-input').classList.remove('d-none');
+    document.getElementById('btn_input').classList.remove('d-none');
+
+    // add col-6 to usd-input-body
+    document.getElementById('usd-input-body').classList.add('col-6');
+    currentCurrency = 'Crypto';
+  });
+  bankTransferBtn.addEventListener('click', () => {
+    bankTransferBtn.classList.add('active');
+    cryptoBtn.classList.remove('active');
+
+    // remove btc address input and remove btc_input
+    document.getElementById('btc-address-input').classList.add('d-none');
+    document.getElementById('btn_input').classList.add('d-none');
+
+    // remove col-6 from usd-input-body
+    document.getElementById('usd-input-body').classList.remove('col-6');
+    currentCurrency = 'Bank Transfer';
+  });
 </script>
 {% endblock content %}
