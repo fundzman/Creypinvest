@@ -452,7 +452,7 @@ def withdraw_done(request):
                     qsd.save()
                     qsr.save()
                 qs.status = "credit"
-                qs.msg = f"You Withdraw ${price}"
+                qs.msg = f"Pending Withdrawal of ${price}"
                 qs.save()
                 try:
                     url = request.build_absolute_uri(

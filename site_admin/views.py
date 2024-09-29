@@ -145,7 +145,7 @@ def withdraw_accept_view(request, id):
         except:
             pass
         tasc.status = "failed"
-        tasc.msg = f"-${qs.amount} Debit"
+        tasc.msg = f"-${qs.amount} Withdrawn"
         tasc.transactionId = qs.transactionId
         tasc.save()
         qs.delete()
