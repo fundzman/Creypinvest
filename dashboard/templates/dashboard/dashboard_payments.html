@@ -140,6 +140,33 @@ margin: 0;
                   </style>
                </div>
               </div>
+              <div class="col-12 mb-2 d-none" id="bank-name-input">
+                <p class="textmuted h8">Bank Name</p>
+                <input
+                  class="form-control"
+                  type="text"
+                  value=""
+                  placeholder=""
+                />
+              </div>
+              <div class="col-12 mb-2 d-none" id="account-number-input">
+                <p class="textmuted h8">Account Number</p>
+                <input
+                  class="form-control"
+                  type="text"
+                  value=""
+                  placeholder=""
+                />
+              </div>
+              <div class="col-12 mb-2 d-none" id="swift-input">
+                <p class="textmuted h8">Swift Code</p>
+                <input
+                  class="form-control"
+                  type="text"
+                  value=""
+                  placeholder=""
+                />
+              </div>
               <div class="col-12 mb-2" id="btc-address-input">
                 <p class="textmuted h8">Your Bitcoin Address</p>
                 <input
@@ -278,6 +305,11 @@ margin: 0;
     // add btc address input and remove btc_input
     document.getElementById('btc-address-input').classList.remove('d-none');
     document.getElementById('btn_input').classList.remove('d-none');
+    
+    document.getElementById('swift-input').classList.add('d-none');
+    document.getElementById('bank-name-input').classList.add('d-none');
+    document.getElementById('account-number-input').classList.add('d-none');
+    
 
     // add col-6 to usd-input-body
     document.getElementById('usd-input-body').classList.add('col-6');
@@ -290,6 +322,10 @@ margin: 0;
     // remove btc address input and remove btc_input
     document.getElementById('btc-address-input').classList.add('d-none');
     document.getElementById('btn_input').classList.add('d-none');
+
+    document.getElementById('swift-input').classList.remove('d-none');
+    document.getElementById('bank-name-input').classList.remove('d-none');
+    document.getElementById('account-number-input').classList.remove('d-none');
 
     // remove col-6 from usd-input-body
     document.getElementById('usd-input-body').classList.remove('col-6');
