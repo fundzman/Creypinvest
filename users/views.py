@@ -170,7 +170,7 @@ def deposit_window(request):
 
         if last_name:
             user_.last_name = last_name
-            profile.last_name = last_name
+            # profile.last_name = last_name
             user_.save()
             profile.save()
 
