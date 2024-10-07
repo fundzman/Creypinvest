@@ -83,19 +83,19 @@ def dashboard_profile_auth_view(request):
         try:
             if len(full_name) > 1:
                 user_.first_name = full_name[0]
-                user_profile.first_name = full_name[0]
+                # user_profile.first_name = full_name[0]
                 user_.last_name = full_name[1]
-                user_profile.last_name = full_name[1]
+                # user_profile.last_name = full_name[1]
             elif len(full_name) == 1:
                 user_.first_name = full_name[0]
-                user_profile.first_name = full_name[0]
+                # user_profile.first_name = full_name[0]
 
         except:
             user_.first_name = ""
-            user_profile.first_name = ""
+            # user_profile.first_name = ""
 
             user_.last_name = ""
-            user_profile.last_name = ""
+            # user_profile.last_name = ""
 
         user_.email = email
 
