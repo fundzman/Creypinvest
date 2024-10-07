@@ -13,7 +13,7 @@ def dashboard_home_view(request):
         if not Wallet.objects.filter(user=request.user.profile):
             Wallet.objects.create(user=request.user.profile)
         qs = Wallet.objects.filter(user=request.user.profile).first()
-        bal = qs.balance.split(".")
+        bal = f"{float(qs.balance)}".split(".")
         first_bal = bal[0]
         second_bal = bal[1]
         transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
@@ -126,7 +126,7 @@ def dashboard_payments_view(request):
         if not Wallet.objects.filter(user=request.user.profile):
             Wallet.objects.create(user=request.user.profile)
         qs = Wallet.objects.filter(user=request.user.profile).first()
-        bal = qs.balance.split(".")
+        bal = f"{float(qs.balance)}".split(".")
         first_bal = bal[0]
         second_bal = bal[1]
         transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)
@@ -180,7 +180,7 @@ def dashborad_upgrade_view(request):
         if not Wallet.objects.filter(user=request.user.profile):
             Wallet.objects.create(user=request.user.profile)
         qs = Wallet.objects.filter(user=request.user.profile).first()
-        bal = qs.balance.split(".")
+        bal = f"{float(qs.balance)}".split(".")
         first_bal = bal[0]
         second_bal = bal[1]
         transactions = Transaction.objects.filter(wallet=request.user.profile.wallet)

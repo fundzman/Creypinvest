@@ -15,21 +15,21 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = "True" in os.getenv("DEBUG")
 USE_S3 = "True" in os.getenv("USE_S3")
 
 ALLOWED_HOSTS = ["*"]
 LOGIN_URL = "/auth/account/login"
 LOGIN_REDIRECT_URL = "/dashboard"
 
-CSRF_COOKIE_SECURE = DEBUG != False
-SESSION_COOKIE_SECURE = DEBUG != False
-SECURE_SSL_REDIRECT = DEBUG != False
-SECURE_HSTS_SECONDS = 518400 if (DEBUG != False) else None
-SECURE_HSTS_INCLUDE_SUBDOMAINS = DEBUG != False
-SECURE_HSTS_PRELOAD = DEBUG != False
+CSRF_COOKIE_SECURE = DEBUG == False
+SESSION_COOKIE_SECURE = DEBUG == False
+SECURE_SSL_REDIRECT = DEBUG == False
+SECURE_HSTS_SECONDS = 518400 if (DEBUG == False) else None
+SECURE_HSTS_INCLUDE_SUBDOMAINS = DEBUG == False
+SECURE_HSTS_PRELOAD = DEBUG == False
 SECURE_PROXY_SSL_HEADER = (
-    ("HTTP_X_FORWARDED_PROTO", "https") if (DEBUG != False) else None
+    ("HTTP_X_FORWARDED_PROTO", "https") if (DEBUG == False) else None
 )
 
 # Application definition
