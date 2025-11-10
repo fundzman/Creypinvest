@@ -45,3 +45,12 @@ This is a Bitcoin Broker Site Created By __Divine Ikhuoria Ebehiremen__
 - Getting User __IP Address__ For The New Device Detection!
 
 Made With ❤ By __Divine Ikhuoria__ aka Divuzki
+
+## Email Configuration (Resend)
+
+- Install dependencies: `django-anymail` is already included in `requirements.txt`.
+- Set environment variables in `.env`:
+  - `RESEND_API_KEY=YOUR_RESEND_API_KEY`
+  - `DEFAULT_FROM_EMAIL=you@your-verified-domain.com`
+- Verify your sending domain in Resend and ensure `DEFAULT_FROM_EMAIL` matches your verified domain.
+- The app uses Django’s `send_mail` with Anymail’s Resend backend; no code changes are required where emails are sent.

@@ -20,7 +20,7 @@ from django.http import HttpResponse
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 currentDT = datetime.datetime.now()
-ADMIN_EMAIL = settings.EMAIL_HOST_USER
+ADMIN_EMAIL = settings.DEFAULT_FROM_EMAIL
 
 
 def set_cookie_function(key, value, max_age=None, response=None):
