@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import django
 import dj_database_url
 from dotenv import load_dotenv
 
@@ -15,8 +16,8 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "True" in os.getenv("DEBUG")
-USE_S3 = "True" in os.getenv("USE_S3")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+USE_R2 = os.getenv("USE_R2", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
 LOGIN_URL = "/auth/account/login"
@@ -161,31 +162,42 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-if USE_S3:
-    # aws settings
-    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-    AWS_DEFAULT_ACL = os.getenv("AWS_DEFAULT_ACL")
-    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.eu-west-2.amazonaws.com"
-    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
-    AWS_S3_SECURE_URLS = True
+if USE_R2:
+    # Cloudflare R2 (S3-compatible API via django-storages)
+    R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID")
+    R2_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID")
+    R2_SECRET_ACCESS_KEY = os.getenv("R2_SECRET_ACCESS_KEY")
+    R2_BUCKET_NAME = os.getenv("R2_BUCKET_NAME")
+    R2_REGION = os.getenv("R2_REGION", "auto")
+    # Public custom domain connected to the R2 bucket
+    R2_CDN_DOMAIN = os.getenv("R2_CDN_DOMAIN", "cdn.creypinvest.com")
 
-    # s3 static settings
-    STATIC_LOCATION = "static"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
-    STATICFILES_STORAGE = "creyp.storage_backends.StaticStorage"
-    COMPRESS_URL = STATIC_URL
-    COMPRESS_ROOT = BASE_DIR / "/static-root/"
-    COMPRESS_STORAGE = "creyp.storage_backends.CachedStaticS3BotoStorage"
+    AWS_S3_ENDPOINT_URL = f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+    AWS_S3_REGION_NAME = R2_REGION
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_S3_ADDRESSING_STYLE = "path"
+    AWS_STORAGE_BUCKET_NAME = R2_BUCKET_NAME
+    AWS_ACCESS_KEY_ID = R2_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = R2_SECRET_ACCESS_KEY
+    AWS_DEFAULT_ACL = None  # R2 has no object ACLs; access is set on the bucket
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_CUSTOM_DOMAIN = R2_CDN_DOMAIN
 
-    # s3 public media settings
-    PUBLIC_MEDIA_LOCATION = "media"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
-    DEFAULT_FILE_STORAGE = "creyp.storage_backends.PublicMediaStorage"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 
+    # Django 4.2+ replaced DEFAULT_FILE_STORAGE/STATICFILES_STORAGE with STORAGES
+    # (and 5.1 ignores the old names); requirements_divine.txt is unpinned.
+    if django.VERSION >= (4, 2):
+        STORAGES = {
+            "default": {"BACKEND": "creyp.storage_backends.R2MediaStorage"},
+            "staticfiles": {"BACKEND": "creyp.storage_backends.R2StaticStorage"},
+        }
+    else:
+        DEFAULT_FILE_STORAGE = "creyp.storage_backends.R2MediaStorage"
+        STATICFILES_STORAGE = "creyp.storage_backends.R2StaticStorage"
 
-elif not USE_S3:
+else:
     STATIC_URL = "/static/"
     MEDIA_URL = "/media/"
     STATIC_ROOT = BASE_DIR / "static-root"
@@ -201,7 +213,7 @@ ANYMAIL = {
     "RESEND_API_KEY": os.getenv("RESEND_API_KEY"),
 }
 
-# Use a dedicated env var for from address; fallback to legacy SMTP var
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL") or os.getenv("EMAIL_HOST_USER")
+# Must be an address on a domain verified in Resend
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -3,7 +3,7 @@ from django.conf import settings
 import string
 import random
 import datetime
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 import threading
 from django.http import HttpResponse
 from django.utils.html import strip_tags
@@ -91,7 +91,7 @@ def image_resize(image, width, height):
         img.save(buffer, format=img_format)
         # Wrap the buffer in File object
         file_object = File(buffer)
-        # Save the new resized file as usual, which will save to S3 using django-storages
+        # Save the new resized file as usual, which will save to R2 using django-storages
         image.save(img_filename, file_object)
 
 
@@ -127,6 +127,16 @@ class EmailThread(threading.Thread):
     def run(self):
         self.email.send()
 
+
+def send_html_email(subject, text_content, html_content, to):
+    email = EmailMultiAlternatives(subject, text_content, ADMIN_EMAIL, to)
+    email.attach_alternative(html_content, "text/html")
+    # Send in the background in production so requests don't wait on Resend
+    if settings.DEBUG:
+        email.send()
+    else:
+        EmailThread(email).start()
+
 milliseconds = str(currentDT.microsecond).strip()
 def send_contact_us_email(request, name=None, phone=None, user_email=None, subject=None, body=None, toAdmin=False):
     email_subject = subject
@@ -141,14 +151,9 @@ def send_contact_us_email(request, name=None, phone=None, user_email=None, subje
     text_content = strip_tags(email_subject)
     user_email = user_email.replace("@", f"+{milliseconds}@")
     if toAdmin == True:
-        email = send_mail(
-            email_subject, text_content, ADMIN_EMAIL, [ADMIN_EMAIL], html_message=email_body)
+        send_html_email(email_subject, text_content, email_body, [ADMIN_EMAIL])
     else:
-        email = send_mail(
-            email_subject, text_content, ADMIN_EMAIL, [user_email], html_message=email_body)
-
-    if not settings.DEBUG:
-        EmailThread(email).start()
+        send_html_email(email_subject, text_content, email_body, [user_email])
 
 def send_alert_mail(request, email_subject, user_email, email_message, email_image="alert.png", html_message=None, email_ip=None, email_user=None):
     email_subject = email_subject
@@ -169,8 +174,4 @@ def send_alert_mail(request, email_subject, user_email, email_message, email_ima
     if email_message:
         text_content = strip_tags(email_message)
     user_email = user_email.replace("@", f"+{milliseconds}@")
-    email = send_mail(
-        email_subject, text_content, ADMIN_EMAIL, [user_email], html_message=email_body)
-
-    if not settings.DEBUG:
-        EmailThread(email).start()
+    send_html_email(email_subject, text_content, email_body, [user_email])
